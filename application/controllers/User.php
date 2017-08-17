@@ -13,9 +13,10 @@ class User extends CI_Controller{
     }
 
     function index(){
-        if(empty($this->session->userdata('admin'))){
-            $this->load->view('layout_login.php');
-        }
+        $this->load->library('session');
+        $IdAppUser = $this->input->cookie('IdAppUser');
+        $AuthKey   = $this->input->cookie('Authkey');
+        $UserName  = $this->input->cookie('UserName');
     }
 
     function login(){
@@ -31,9 +32,9 @@ class User extends CI_Controller{
         if(!empty($user)){
             $app = $this->User_model->get_app_user($user->IdAppUser);
             if(!empty($app)){
-               setcookie("Authkey",$user->UserPass,time()+500,"/");
-               setcookie("IdAppUser",$user->IdAppUser,time()+500,"/");
-               setcookie("UserName",$user->UserName,time()+500,"/");
+               setcookie("Authkey",$user->UserPass,time()+1500,"/");
+               setcookie("IdAppUser",$user->IdAppUser,time()+1500,"/");
+               setcookie("UserName",$user->UserName,time()+1500,"/");
                 $arr = array("status" => true,"Authkey" =>$user->UserPass,"IdAppUser" =>$user->IdAppUser,"UserName" => $user->UserName);
                   $this->success_msg();
             }else{
@@ -41,6 +42,29 @@ class User extends CI_Controller{
             }
         }else{
                 $this->error_msg();
+        }
+
+    }
+
+    function change_password(){
+        $data = json_decode(file_get_contents('php://input'));
+        if(empty($data)){
+            $this->error_msg();
+            return;
+        }
+        $username = $data->UserName;
+        $old_password = md5(md5($data->OldPass));
+
+        $new_password = md5(md5($data->NewPass));
+        $user_data     = array('UserName' =>$username,'UserPass' =>$old_password);
+        $user = $this->User_model->get($user_data);
+        if(!empty($user)){
+            $new_user = array('UserName' =>$user->UserName,'UserPass' =>$new_password);
+            if($this->User_model->update($user->UserName,$new_user)){
+                $this->success_msg();
+            }else{
+                $this->error_msg();
+            }
         }
 
     }
@@ -56,7 +80,7 @@ class User extends CI_Controller{
     function test(){
         $password = md5(md5("a"));
         $user = array("UserName" => "a","UserPass" => $password,"isActive"=>1);
-        $ap = $this->User_model->update(2,$user);
-        var_dump($ap);
+        $ap = $this->User_model->insert($user);
+
     }
 }

@@ -20,8 +20,8 @@ class User_model extends CI_Model{
         return $this->db->insert('app_user',$user);
     }
 
-    function update($IdAppUser,$user){
-        $this->db->where('IdAppUser',$IdAppUser);
+    function update($Username,$user){
+        $this->db->where('UserName',$Username);
         return $this->db->update('app_user',$user);
     }
 
