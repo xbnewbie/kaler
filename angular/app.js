@@ -2,7 +2,6 @@ var app = angular.module('myApp',["ngRoute","ngCookies"]);
 
 
 app.factory('Services', function($q, $rootScope,$http) {
-
     this.submitCompany = function(CompanyName,CompanyLogo) {
         var url="http://localhost/idcard/index.php/api/add_company";
         var deferred = $q.defer(),
@@ -54,6 +53,27 @@ app.factory('Services', function($q, $rootScope,$http) {
         return deferred.promise;
     };
 
+    this.SaveProfile = function(FirstName,MiddleName,LastName,PhotoPicture,IdCompany,items) {
+        var url="http://localhost/idcard/index.php/api/save_profile";
+
+        var profile = {FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,IdCompany:IdCompany};
+
+
+        var item_profile = angular.toJson(items);
+        profile = angular.toJson(profile);
+        formdata = new FormData();
+        formdata.append('profile',profile);
+        formdata.append('item_profile',item_profile);
+        formdata.append('PhotoPicture', PhotoPicture);
+        var request = $http.post(url,formdata,{
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        });
+       return request;
+
+    };
+
+
 
     this.GetCompany = function (IdCompany) {
         var request = $http({
@@ -81,9 +101,6 @@ app.factory('Services', function($q, $rootScope,$http) {
 
     }
 
-
-
-
     return this;
 })
 
@@ -91,24 +108,28 @@ app.factory('Services', function($q, $rootScope,$http) {
 
 
 app.config(function ($routeProvider) {
+    var template_url="http://localhost/idcard/index.php/template";
     $routeProvider.when("/",{
-        templateUrl :"application/views/layout_admin.html"
+        templateUrl :template_url+"/menu_admin"
     }).when("/login",{
-        templateUrl : "application/views/layout_login.html"
+        templateUrl : template_url+"/login"
     }).when("/admin",{
-        templateUrl :"application/views/layout_admin.html"
+        templateUrl :template_url+"/menu_admin"
     }).when("/admin_change_password",{
-        templateUrl :"application/views/admin_change_password.html"
+        templateUrl :template_url+"/change_password"
     }).when("/add_company",{
-        templateUrl :"application/views/add_company.html"
+        templateUrl :template_url+"/add_company"
     }).when("/list_company",{
-        templateUrl :"application/views/list_company.html"
+        templateUrl :template_url+"/list_company"
     }).when("/company/:IdCompany",{
-        templateUrl :"application/views/company.html",
+        templateUrl :template_url+"/company",
         controller : 'ViewCompanyController'
     }).when("/edit_company/:IdCompany",{
-        templateUrl :"application/views/edit_company.html",
+        templateUrl :template_url+"/edit_company",
         controller : 'EditCompanyController'
+    }).when("/add_profile/:IdCompany",{
+        templateUrl : template_url+"/add_profile",
+        controller : 'AddProfileController'
     })
         .otherwise({
         template : "Not found"

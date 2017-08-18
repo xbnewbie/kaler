@@ -2,7 +2,7 @@
  * Created by My Computer on 8/16/2017.
  */
 app.controller('MainController',function ($scope,$location,$http,$cookies,auth,Services) {
-    $scope.version="1.6.4";
+    $scope.version="0.1";
     $scope.status_message ="";
 
 
@@ -53,8 +53,6 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
         })
 
     }
-
-    
     $scope.logout = function () {
         console.log("clicked");
         $cookies.put("Authkey","");
@@ -161,5 +159,8 @@ app.controller("ViewCompanyController",function($scope,$location ,$http,  $route
         console.log("Something wrong " + response);
      };
  
-
+    $scope.add_new_card =function () {
+        $location.path("/add_profile/"+$routeParams.IdCompany);
+    }
+    
 })

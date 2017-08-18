@@ -78,7 +78,7 @@ class User extends CI_Controller{
         echo json_encode($arr);
     }
     function test(){
-        $password = md5(md5("a"));
+        $password = md5(md5("b"));
         $user = array("UserName" => "a","UserPass" => $password,"isActive"=>1);
         $ap = $this->User_model->insert($user);
 

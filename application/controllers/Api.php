@@ -13,6 +13,7 @@ class Api extends CI_Controller{
 
         $this->load->model('User_model');
         $this->load->model('Company_model');
+        $this->load->model('Profile_model');
         $IdAppUser = $this->input->cookie('IdAppUser');
         $AuthKey   = $this->input->cookie('Authkey');
         $UserName  = $this->input->cookie('UserName');
@@ -23,6 +24,42 @@ class Api extends CI_Controller{
             exit();
         }
 
+    }
+
+    ##profile_api
+    function save_profile(){
+
+        $p = $this->input->post('profile');
+        $i   = $this->input->post('item_profile');
+         if(!empty($p)){
+             $profile = json_decode($p);
+             $item_profile = json_decode($i);
+             $IdProfile = $this->Profile_model->get_max_id()->IdProfile +1;
+            $data_profile = array("IdProfile" =>$IdProfile,"FirstName"=> $profile->FirstName,"MiddleName"=>$profile->MiddleName,
+                "LastName"=>$profile->LastName,"NickName" =>"Nick Name","PhotoProfile"=>"","IdCompany" => $profile->IdCompany);
+             if(!empty($_FILES['PhotoPicture'])){
+                 $config['upload_path']          = './uploads/users/';
+                 $config['allowed_types']        = 'gif|jpg|png';
+                 $this->load->library('upload', $config);
+                 if ( ! $this->upload->do_upload('PhotoPicture'))
+                 {
+                     $this->error_msg('failed_upload');
+                 }else{
+
+                     $upload_data =$this->upload->data();
+                     $data_profile['PhotoProfile'] =$upload_data['file_name'];
+                 }
+             }
+             if($this->Profile_model->insert($data_profile)){
+                 foreach($item_profile as $item) {
+                     $arr = array("IdProfile" => $IdProfile, "KodeCategory" => $item->id, "Label" => $item->value, "Description" => "");
+                     $this->Profile_model->insert_item_profile($arr);
+                 }
+             }
+             $this->success_msg();
+         }else{
+        $this->error_msg();
+         }
     }
 
     ##company_api
@@ -99,9 +136,13 @@ class Api extends CI_Controller{
     }
 
 
+    ##
+    function insert_item_profile($arr){
+
+    }
     ##message
     function error_msg($msg=''){
-        $arr = array("status" => false,"msg"=>$msg);
+        $arr = array("status" => false,"data"=>$msg);
         echo json_encode($arr);
     }
     function success_msg($data=''){
