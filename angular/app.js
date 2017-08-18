@@ -53,10 +53,10 @@ app.factory('Services', function($q, $rootScope,$http) {
         return deferred.promise;
     };
 
-    this.SaveProfile = function(FirstName,MiddleName,LastName,PhotoPicture,IdCompany,items) {
+    this.SaveProfile = function(FirstName,MiddleName,LastName,NickName,PhotoPicture,IdCompany,items) {
         var url="http://localhost/idcard/index.php/api/save_profile";
 
-        var profile = {FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,IdCompany:IdCompany};
+        var profile = {FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,NickName:NickName,IdCompany:IdCompany};
 
 
         var item_profile = angular.toJson(items);
@@ -73,6 +73,16 @@ app.factory('Services', function($q, $rootScope,$http) {
 
     };
 
+    this.GetCardsCompany = function(IdCompany){
+        var url="http://localhost/idcard/index.php/api/get_cards_company";
+        var request = $http({
+            method: "POST",
+            url: url,
+            data: {IdCompany : IdCompany}
+        });
+        return request;
+
+    }
 
 
     this.GetCompany = function (IdCompany) {

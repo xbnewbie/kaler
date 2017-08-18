@@ -47,8 +47,7 @@ app.controller('AddProfileController',['$scope','$routeParams','$location' ,'$ht
     };
 
     self.SaveProfile = function () {
-
-       var x= Services.SaveProfile(self.FirstName,self.MiddleName,self.LastName,self.fileInputSelected[0],$routeParams.IdCompany, self.choices);
+       var x= Services.SaveProfile(self.FirstName,self.MiddleName,self.LastName,self.NickName,self.fileInputSelected[0],$routeParams.IdCompany, self.choices);
             x.then(function sukses(response) {
                 console.log(response);
             }),function failed(response) {

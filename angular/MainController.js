@@ -158,7 +158,12 @@ app.controller("ViewCompanyController",function($scope,$location ,$http,  $route
      }),function failed(response) {
         console.log("Something wrong " + response);
      };
- 
+
+     Services.GetCardsCompany($routeParams.IdCompany).then(function sucess(response) {
+        $scope.CompanyCards = response.data;
+     }),function failed(response) {
+         console.log("Failed fetch cards");
+     }
     $scope.add_new_card =function () {
         $location.path("/add_profile/"+$routeParams.IdCompany);
     }

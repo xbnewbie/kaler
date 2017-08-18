@@ -36,7 +36,7 @@ class Api extends CI_Controller{
              $item_profile = json_decode($i);
              $IdProfile = $this->Profile_model->get_max_id()->IdProfile +1;
             $data_profile = array("IdProfile" =>$IdProfile,"FirstName"=> $profile->FirstName,"MiddleName"=>$profile->MiddleName,
-                "LastName"=>$profile->LastName,"NickName" =>"Nick Name","PhotoProfile"=>"","IdCompany" => $profile->IdCompany);
+                "LastName"=>$profile->LastName,"NickName" =>$profile->NickName,"PhotoProfile"=>"","IdCompany" => $profile->IdCompany);
              if(!empty($_FILES['PhotoPicture'])){
                  $config['upload_path']          = './uploads/users/';
                  $config['allowed_types']        = 'gif|jpg|png';
@@ -62,6 +62,12 @@ class Api extends CI_Controller{
          }
     }
 
+    function get_cards_company(){
+        $data = 1;//json_decode(file_get_contents('php://input'));
+        $IdCompany =6;// $data->IdCompany;
+         $cards = $this->Profile_model->get_profile_by_company($IdCompany);
+         $this->success_msg($cards);
+    }
     ##company_api
     function add_company(){
         $companyName = $this->input->post('CompanyName');

@@ -7,6 +7,7 @@
 <body>
 <div ng-controller="ViewCompanyController">
 {{company}}
+    {{CompanyCards}}
     <br>
 <button ng-click="add_new_card()">Add Card</button>
 </div>

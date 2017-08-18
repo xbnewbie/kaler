@@ -4,6 +4,7 @@
     First Name    <input type="text" ng-model="FirstName"> <br>
     Midle Name    <input type="text" ng-model="MiddleName"> <br>
     Last Name    <input type="text" ng-model="LastName"> <br>
+    Nick Name    <input type="text" ng-model="NickName"> <br>
     <hr>
     <input type="file" ng-model="profile_picture" onchange="angular.element(this).scope().fileNameChanged(this)">
     <hr>
