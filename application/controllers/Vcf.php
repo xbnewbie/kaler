@@ -6,15 +6,25 @@
  * Time: 11:10 AM
  */
 use JeroenDesloovere\VCard\VCard;
+require_once APPPATH.'third_party/vendor/autoload.php';
 class vcf extends CI_Controller{
     //vcf 4.0
-    function generate_vcf(){
-        require_once APPPATH.'third_party/vendor/autoload.php';
+    function generate(){
+        $NickName = $this->uri->segment(3);
+        $this->load->model('Profile_model');
+        $this->load->model('Company_model');
+        $card = $this->Profile_model->get_profile_by_nickname($NickName);
+        var_dump($card);
+        $items = $this->Profile_model->get_item_profile($card->IdProfile);
+       var_dump($items);
 
+        $profile =   $company = $this->Company_model->getById($card->IdCompany);
+        var_dump($profile);
+        exit($NickName);
         $vcard = new VCard();
 
-        $lastname = 'Desloovere';
-        $firstname = 'Jeroen';
+        $lastname = $card->LastName;
+        $firstname = $card->FirstName;
         $additional = '';
         $prefix = '';
         $suffix = '';
@@ -37,7 +47,7 @@ class vcf extends CI_Controller{
       //  $vcard->addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium');
         $vcard->addURL($url);
 
-        $vcard->addPhoto('C:\wamp64\www\idcard\application\third_party\landscape.jpeg');
+        //$vcard->addPhoto('C:\wamp64\www\idcard\application\third_party\landscape.jpeg');
 
 // return vcard as a string
 //return $vcard->getOutput();

@@ -70,7 +70,31 @@ app.factory('Services', function($q, $rootScope,$http) {
 
     };
 
-    this.GetCardsCompany = function(IdCompany){
+    this.EditProfile = function(IdProfile,FirstName,MiddleName,LastName,NickName,PhotoPicture,IdCompany,items) {
+        var url="http://localhost/idcard/index.php/api/edit_profile";
+        console.log("Updating company "+IdCompany);
+        var profile = {IdProfile :IdProfile,FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,NickName:NickName,IdCompany:IdCompany};
+
+
+        var item_profile = angular.toJson(items);
+        profile = angular.toJson(profile);
+        console.log("Mengirim ");
+console.log(item_profile);
+
+        formdata = new FormData();
+        formdata.append('profile',profile);
+        formdata.append('item_profile',item_profile);
+        formdata.append('PhotoPicture', PhotoPicture);
+        var request = $http.post(url,formdata,{
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        });
+        return request;
+
+    };
+
+
+    this.GetCardsByCompany = function(IdCompany){
         var url="http://localhost/idcard/index.php/api/get_cards_company";
         var request = $http({
             method: "POST",
@@ -99,6 +123,21 @@ app.factory('Services', function($q, $rootScope,$http) {
 
     this.GetCardByNickName = function (NickName) {
 
+        var request = $http({
+            method: "POST",
+            url: "http://localhost/idcard/index.php/api/get_card_by_nickname",
+            data: {NickName: NickName}
+        });
+        return request;
+    }
+    
+    this.GetItemProfile = function (IdProfile) {
+        var request = $http({
+            method: "POST",
+            url: "http://localhost/idcard/index.php/api/get_item_profile",
+            data: {IdProfile: IdProfile}
+        });
+        return request;
     }
 
     this.Login = function (u,p) {

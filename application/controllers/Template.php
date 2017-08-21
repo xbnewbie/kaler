@@ -41,4 +41,14 @@ class Template extends CI_Controller{
         $data['item_category'] = $item_category;
         $this->load->view('layout_add_profile',$data);
     }
+
+    function view_card(){
+        $this->load->view('view_card');
+    }
+    function edit_card(){
+        $this->load->model('Profile_model');
+        $item_category = $this->Profile_model->get_all_item_category();
+        $data['item_category'] = $item_category;
+        $this->load->view('edit_card',$data);
+    }
 }

@@ -17,16 +17,39 @@ class Profile_model extends CI_Model{
         return $this->db->get()->row();
     }
 
+    function get_profile_by_nickname($nickname){
+        $this->db->select('*');
+        $this->db->from('profile');
+        $this->db->where('NickName',$nickname);
+        return $this->db->get()->row();
+    }
+
+    function get_item_profile($IdProfile){
+        $this->db->select('*');
+        $this->db->from('item_profile');
+        $this->db->join('item_category','item_category.Kode = item_profile.KodeCategory','left');
+        $this->db->where('item_profile.IdProfile',$IdProfile);
+        return $this->db->get()->result();
+    }
+
 
     function get_profile_by_company($IdCompany){
         $this->db->select('*');
         $this->db->from('profile');
-        $this->db->join('item_profile','item_profile.IdProfile = profile.IdProfile','left');
-        $this->db->join('item_category','item_category.Kode = item_profile.KodeCategory','left');
-        $this->db->where('profile.IdCompany',$IdCompany);
-        return $this->db->get()->result();
+        $this->db->where('IdCompany',$IdCompany);
+         $profiles = $this->db->get()->result();
+        return $profiles;
     }
 
+
+    /*function get_item_profile($IdProfile){
+        $this->db->select('profile.IdProfile,item_profile.KodeCategory,item_profile.Label,item_category.Kode,item_category.Deskripsi');
+        $this->db->from('profile');
+        $this->db->join('item_profile','item_profile.IdProfile = profile.IdProfile','left');
+      $this->db->join('item_category','item_category.Kode = item_profile.KodeCategory','left');
+      $this->db->where('profile.IdProfile',$IdProfile);
+      return $this->db->get()->result();
+    }*/
     function get_all(){
         $this->db->select('*');
         $this->db->from('profile');
@@ -53,8 +76,9 @@ class Profile_model extends CI_Model{
        return $this->db->insert('item_profile',$item_profile);
     }
 
-    function delete_item_profile($item_profile){
-
+    function delete_item_profile($IdProfile){
+        $this->db->where('IdProfile',$IdProfile);
+        return $this->db->delete('item_profile');
     }
 
     function get_all_item_category(){

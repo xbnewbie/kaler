@@ -2,14 +2,16 @@
  * Created by My Computer on 8/16/2017.
  */
 app.controller('MainController',function ($scope,$location,$http,$cookies,auth,Services) {
-    $scope.version="0.1";
-    $scope.status_message ="";
+    var self = $scope;
+    
+    self.version="0.1";
+    self.status_message ="";
 
 
-    $scope.login = function(u,p){
+    self.login = function(u,p){
         if(u==null || p ==null){
-            $scope.status_message ="username and password required";
-            console.log($scope.status_message);
+            self.status_message ="username and password required";
+            console.log(self.status_message);
             return;
         }
         Services.Login(u,p).then(function (response) {
@@ -23,14 +25,14 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
                 auth.setUser(user);
                 $location.path('/admin');
            }else{
-               console.log("Incorret login");
-               $scope.status_message="Login Inccoret";
+               toastr.error("Incorret Login");
+               self.status_message="Login Inccoret";
            }
         },function(response) {
                 console.log("error " +response);
         })
     }
-    $scope.change_password = function (old_password,new_password,retype_new_password) {
+    self.change_password = function (old_password,new_password,retype_new_password) {
         if(new_password != retype_new_password){
             console.log("new and retype not match");
             return;
@@ -43,17 +45,17 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
             console.log(response.data);
             var result = angular.fromJson(response.data);
             if(result.status==true){
-                console.log("sukses change password");
-                $scope.logout();
+                toastr.info("sukses change password");
+                self.logout();
             }else{
-                console.log("Incorret login");
+                toastr.error("Incorret login");
             }
         },function(response) {
             console.log("error " +response);
         })
 
     }
-    $scope.logout = function () {
+    self.logout = function () {
         console.log("clicked");
         $cookies.put("Authkey","");
         $cookies.put("IdAppUser");
@@ -66,10 +68,11 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
 })
 
 app.controller('CompanyController', function($scope,$location ,$http, Services) {
+    var self = $scope;
     var namesArr =[];
-    $scope.add = function() {
+    self.add = function() {
 
-        var r = Services.submitCompany($scope.CompanyName, namesArr[0]);
+        var r = Services.submitCompany(self.CompanyName, namesArr[0]);
         r.then(
             function(r) {
                 // success
@@ -78,7 +81,7 @@ app.controller('CompanyController', function($scope,$location ,$http, Services) 
                 if(result.status==true){
                     $location.path("/list_company");
                 }else{
-                    console.log(r.response);
+                    toastr.error("Failed fetch list company");
                 }
             },function(r) {
                 // failure
@@ -86,11 +89,11 @@ app.controller('CompanyController', function($scope,$location ,$http, Services) 
             });
     }
 
-    $scope.get_company = function () {
+    self.get_company = function () {
         return "anjas";
     }
 
-    $scope.fileNameChanged = function (ele) {
+    self.fileNameChanged = function (ele) {
         var files = ele.files;
         var l = files.length;
         namesArr[0] = files[0];
@@ -99,33 +102,34 @@ app.controller('CompanyController', function($scope,$location ,$http, Services) 
 });
 
 app.controller('EditCompanyController', function($scope,$location ,$http, Services,$routeParams) {
+    var self = $scope;
     var namesArr =[];
     Services.GetCompany($routeParams.IdCompany).then(function success(response) {
         var result = response.data;
-        $scope.company = result.data;
-        $scope.CompanyName =$scope.company.CompanyName;
+        self.company = result.data;
+        self.CompanyName =self.company.CompanyName;
 
     }),function failed(response) {
         console.log("Something wrong " + response);
     };
-    $scope.edit = function() {
-        var r = Services.editCompany($routeParams.IdCompany,$scope.CompanyName, namesArr[0]);
+    self.edit = function() {
+        var r = Services.editCompany($routeParams.IdCompany,self.CompanyName, namesArr[0]);
         r.then(
             function(r) {
                 // success
                 var result = angular.fromJson(r.response);
                 if(result.status==true){
-
+                    toastr.info("Success");
                    $location.path("/company/"+$routeParams.IdCompany);
                 }else{
-                    console.log(r.response);
+                    toastr.error("Something wrong . code 121");
                 }
             },function(r) {
                 // failure
-                console.log("fail "+r.response);
+                toastr.error("Web Server Error");
             });
     }
-    $scope.fileNameChanged = function (ele) {
+    self.fileNameChanged = function (ele) {
         var files = ele.files;
         var l = files.length;
         for(var i=0;i<l;i++){
@@ -138,10 +142,11 @@ app.controller('EditCompanyController', function($scope,$location ,$http, Servic
 
 
 app.controller("ListCompany",function($scope,$location ,$http, Services) {
+    var self = $scope;
  Services.GetListCompany().then(function success(response) {
      var result = angular.fromJson(response.data);
      if(result.status==true){
-         $scope.list_company = result.data;
+         self.list_company = result.data;
      }else{
          console.log("Incorret login");
      }
@@ -151,21 +156,55 @@ app.controller("ListCompany",function($scope,$location ,$http, Services) {
 })
 
 app.controller("ViewCompanyController",function($scope,$location ,$http,  $routeParams,Services) {
+    var self = $scope;
     var IdCompany = $routeParams.IdCompany;
      Services.GetCompany($routeParams.IdCompany).then(function success(response) {
          var result = response.data;
-         $scope.company = result.data;
+         self.company = result.data;
      }),function failed(response) {
         console.log("Something wrong " + response);
      };
 
-     Services.GetCardsCompany($routeParams.IdCompany).then(function sucess(response) {
-        $scope.CompanyCards = response.data;
+     Services.GetCardsByCompany($routeParams.IdCompany).then(function sucess(response) {
+         var result = response.data.data;
+          self.CompanyCards = result;
+          //kok di exekusi 2x
+         var timeStampInMs = window.performance && window.performance.now && window.performance.timing && window.performance.timing.navigationStart ? window.performance.now() + window.performance.timing.navigationStart : Date.now();
+         console.log("called time :"+timeStampInMs, Date.now());
+
      }),function failed(response) {
          console.log("Failed fetch cards");
      }
-    $scope.add_new_card =function () {
+
+    self.add_new_card =function () {
         $location.path("/add_profile/"+$routeParams.IdCompany);
     }
     
+})
+
+app.controller("ViewCardController",function ($scope,$location ,$http,  $routeParams,Services) {
+    var self = $scope;
+    self.NickName = $routeParams.NickName;
+     Services.GetCardByNickName(self.NickName).then(function Success(response) {
+
+         if (response.data.status==true){
+
+             self.card = response.data.data;
+             Services.GetItemProfile(self.card.IdProfile).then(function success(r) {
+                 self.profiles = r.data.data;
+
+
+             }),function failed(r) {
+                 toastr.error("error 193");
+             }
+
+         }else{
+             toastr.error("error 187");
+         }
+
+     }),function failed(response) {
+         toastr.error("Error");
+     }
+
+
 })
