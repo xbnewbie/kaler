@@ -3,7 +3,7 @@
  */
 app.controller('MainController',function ($scope,$location,$http,$cookies,auth,Services) {
     var self = $scope;
-    
+    var webservice_url ="http://localhost/idcard/webservice";
     self.version="0.1";
     self.status_message ="";
 
@@ -39,7 +39,7 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
         }
         $http({
             method : "POST",
-            url :"http://localhost/idcard/index.php/user/change_password",
+            url :webservice_url+"/index.php/user/change_password",
             data : {UserName  : auth.getUser().UserName,OldPass : old_password,NewPass : new_password}
         }).then(function (response) {
             console.log(response.data);

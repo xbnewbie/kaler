@@ -1,6 +1,9 @@
 app.config(function ($routeProvider) {
-    var template_url="http://localhost/idcard/index.php/template";
+    var template_url="http://localhost/idcard/webservice/index.php/template";
     $routeProvider.when("/",{
+        template :"kalimat"
+    })
+        .when("/",{
         templateUrl :template_url+"/menu_admin"
     }).when("/login",{
         templateUrl : template_url+"/login"

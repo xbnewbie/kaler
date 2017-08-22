@@ -1,6 +1,8 @@
 app.factory('Services', function($q, $rootScope,$http) {
+    var webservice_url ="http://localhost/idcard/webservice";
+
     this.submitCompany = function(CompanyName,CompanyLogo) {
-        var url="http://localhost/idcard/index.php/api/add_company";
+        var url=webservice_url+"/index.php/api/add_company";
         var deferred = $q.defer(),
             formdata = new FormData(),
             xhr = new XMLHttpRequest();
@@ -25,7 +27,7 @@ app.factory('Services', function($q, $rootScope,$http) {
     };
 
     this.editCompany = function(IdCompany,CompanyName,CompanyLogo) {
-        var url="http://localhost/idcard/index.php/api/edit_company";
+        var url=webservice_url+"/index.php/api/edit_company";
         var deferred = $q.defer(),
             formdata = new FormData(),
             xhr = new XMLHttpRequest();
@@ -51,7 +53,7 @@ app.factory('Services', function($q, $rootScope,$http) {
     };
 
     this.SaveProfile = function(FirstName,MiddleName,LastName,NickName,PhotoPicture,IdCompany,items) {
-        var url="http://localhost/idcard/index.php/api/save_profile";
+        var url=webservice_url+"/index.php/api/save_profile";
 
         var profile = {FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,NickName:NickName,IdCompany:IdCompany};
 
@@ -71,7 +73,7 @@ app.factory('Services', function($q, $rootScope,$http) {
     };
 
     this.EditProfile = function(IdProfile,FirstName,MiddleName,LastName,NickName,PhotoPicture,IdCompany,items) {
-        var url="http://localhost/idcard/index.php/api/edit_profile";
+        var url=webservice_url+"/index.php/api/edit_profile";
         console.log("Updating company "+IdCompany);
         var profile = {IdProfile :IdProfile,FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,NickName:NickName,IdCompany:IdCompany};
 
@@ -95,7 +97,7 @@ console.log(item_profile);
 
 
     this.GetCardsByCompany = function(IdCompany){
-        var url="http://localhost/idcard/index.php/api/get_cards_company";
+        var url=webservice_url+"/index.php/api/get_cards_company";
         var request = $http({
             method: "POST",
             url: url,
@@ -109,7 +111,7 @@ console.log(item_profile);
     this.GetCompany = function (IdCompany) {
         var request = $http({
             method: "POST",
-            url: "http://localhost/idcard/index.php/api/view_company",
+            url: webservice_url+"/index.php/api/view_company",
             data: {IdCompany: IdCompany}
         });
         return request;
@@ -117,7 +119,7 @@ console.log(item_profile);
     this.GetListCompany = function () {
         var request= $http({
             method : "GET",
-            url :"http://localhost/idcard/index.php/api/list_company"});
+            url :webservice_url+"/index.php/api/list_company"});
         return request;
     }
 
@@ -125,7 +127,7 @@ console.log(item_profile);
 
         var request = $http({
             method: "POST",
-            url: "http://localhost/idcard/index.php/api/get_card_by_nickname",
+            url: webservice_url+"/index.php/api/get_card_by_nickname",
             data: {NickName: NickName}
         });
         return request;
@@ -134,7 +136,7 @@ console.log(item_profile);
     this.GetItemProfile = function (IdProfile) {
         var request = $http({
             method: "POST",
-            url: "http://localhost/idcard/index.php/api/get_item_profile",
+            url: webservice_url+"/index.php/api/get_item_profile",
             data: {IdProfile: IdProfile}
         });
         return request;
@@ -143,7 +145,7 @@ console.log(item_profile);
     this.Login = function (u,p) {
         var request=   $http({
             method : "POST",
-            url :"http://localhost/idcard/index.php/user/login",
+            url :webservice_url+"/index.php/user/login",
             data : {UserName  : u,UserPass : p}
 
         });

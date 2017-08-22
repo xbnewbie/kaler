@@ -13,7 +13,7 @@ exit();*/
  */
 $time_start = microtime(true);
 set_time_limit(0);
-$path ="D:/img/";
+$path ="/home/amikom2/public_html/public/fotomhs/1999/";
 if ($handle = opendir($path)) {
 
     while (false !== ($entry = readdir($handle))) {
@@ -24,7 +24,7 @@ if ($handle = opendir($path)) {
             $entry[5] ="_";
             $new_file = $path.$entry;
             rename($old_name,$new_file);
-            echo "renamed $entry\n";
+           // echo "renamed $entry\n";
 
         }
     }

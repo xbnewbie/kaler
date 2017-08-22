@@ -6,6 +6,11 @@
  * Time: 9:04 AM
  */
 class Template extends CI_Controller{
+function __construct()
+{
+    parent::__construct();
+    $this->load->helper('url');
+}
 
     function index(){
         $this->load->view('layout_admin');

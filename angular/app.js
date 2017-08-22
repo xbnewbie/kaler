@@ -1,5 +1,5 @@
 var app = angular.module('myApp',["ngRoute","ngCookies"]);
-
+app.constant('webservice_url','http://localhost/idcard/webservice');
 /**
  * Created by My Computer on 8/19/2017.
  */
