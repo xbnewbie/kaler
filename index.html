@@ -3,31 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <!--global assets !-->
-    <script src="assets/jquery.js"></script>
-    <script src="assets/toastr.min.js"></script>
-    <link rel="stylesheet" href="assets/toastr.min.css">
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="assets/css/toastr.min.css">
     <!-- angular-->
-    <script type="text/javascript" src="angular/angular.min.js"></script>
-    <script type="text/javascript" src="angular/angular-route.js"></script>
+    <script type="text/javascript" src="assets/angular/angular.min.js"></script>
+    <script type="text/javascript" src="assets/angular/angular-route.js"></script>
+    <script type="text/javascript" src="assets/angular/angular-cookies.js"></script>
+    <script type="text/javascript" src="assets/angular/app.js"></script>
+    <script type="text/javascript" src="assets/angular/Router.js"></script>
+    <script type="text/javascript" src="assets/angular/Services.js"></script>
+    <script type="text/javascript" src="assets/angular/MainController.js"></script>
+    <script type="text/javascript" src="assets/angular/ProfileController.js"></script>
+    <!-- end angular -->
 
-
-    <script type="text/javascript" src="angular/angular-cookies.js"></script>
-    <script type="text/javascript" src="angular/app.js"></script>
-    <script type="text/javascript" src="angular/Router.js"></script>
-    <script type="text/javascript" src="angular/Services.js"></script>
-    <script type="text/javascript" src="angular/MainController.js"></script>
-    <script type="text/javascript" src="angular/ProfileController.js"></script>
     <title></title>
 </head>
 
-<p>
-    Nav : <a href="#!/">Home</a>
-</p>
 <body ng-app="myApp" ng-controller="MainController">
 {{status_message}}
 <ng-view>
 
 </ng-view>
-
 </body>
 </html>
