@@ -7,6 +7,7 @@
 <body>
 
 <div ng-controller="ListCompany">
+    {{list_company}}
 <li ng-repeat="company in list_company">
 
 

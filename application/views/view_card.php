@@ -1,6 +1,8 @@
 <div ng-controller="ViewCardController">
-{{card}}
+    {{card}}
 <hr>
+    List Item
+    <hr>
 <li ng-repeat="profile in profiles">
     {{profile.KodeCategory}}   :   {{profile.Label}}
 </li>

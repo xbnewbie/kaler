@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<!--[if IE 9 ]><html class="ie9"><![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Openmidn Bussiness</title>
-
-    <!-- Vendor CSS -->
-    <link href="assets/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/nouislider/distribute/nouislider.min.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="assets/vendors/farbtastic/farbtastic.css" rel="stylesheet">
-    <link href="assets/vendors/bower_components/chosen/chosen.css" rel="stylesheet">
-    <link href="assets/vendors/summernote/dist/summernote.css" rel="stylesheet">
-
-    <!-- CSS -->
-    <link href="assets/css/app_1.min.css" rel="stylesheet">
-    <link href="assets/css/app_2.min.css" rel="stylesheet">
-    <link href="assets/css/over.css" rel="stylesheet">
-    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-</head>
-<body>
 <header id="header" class="clearfix" data-ma-theme="bluepurple"> <!-- Make sure to change both class and data-current-skin when switching sking manually -->
     <ul class="h-inner clearfix">
         <li class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar">
@@ -62,7 +34,7 @@
     </ul>
 </header>
 
-<section id="main">
+<section id="main" ng-controller="SelectorControllerCompany as ctrl">
     <!-- Mobile Menu -->
     <aside id="sidebar" class="sidebar sidebar-alt c-overflow">
         <div class="s-profile">
@@ -94,7 +66,7 @@
             </ul>
         </div>
 
-        <ul class="main-menu">
+        <ul class=" ">
             <li class="active">
                 <a href="index.html"><i class="zmdi zmdi-home"></i> Home</a>
             </li>
@@ -217,25 +189,25 @@
                             <div class="col-xs-6 col-sm-3 col-md-2">
                                 <div class="s-logo">
                                     <div class="sp-pic">
-                                        <img src="assets/img/profile-pics/1.jpg" alt="">
+                                        <img ng-src="uploads/company/{{ctrl.CompanyList.selected.CompanyLogo}}" alt="">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs- col-sm-8 col-md-7">
                                 <div class="card">
                                     <div class="card-body select-padding">
-                                        <div class="form-group">
-                                            <div class="fg-line">
-                                                <div class="select">
-                                                    <select class="selectpicker f-14" data-live-search="true">
-                                                        <option value="">Emirates Airways</option>
-                                                        <option value="">GE Transportation Ltd</option>
-                                                        <option value="">EPSON Mobile Ltd</option>
-                                                        <option value="">PT. Gudang Garam Tbk</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+
+
+                                                        <ui-select ng-model="ctrl.CompanyList.selected"  ng-disabled="ctrl.disabled" title="Choose a Company" on-select="ctrl.GetCard()">
+                                                            <ui-select-match placeholder="Select Company">{{$select.selected.CompanyName}}</ui-select-match>
+                                                            <ui-select-choices repeat="CompanyList in ctrl.CompanyList | propsFilter: {CompanyName: $select.search}">
+                                                                <div ng-bind-html="CompanyList.CompanyName | highlight: $select.search"></div>
+
+
+                                                            </ui-select-choices>
+                                                        </ui-select>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -251,475 +223,89 @@
                 </div>
             </div>
             <div class="row m-t-70">
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    Alexa Soong Feen
-                                    <small>General Manager</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            1192
-                                            <small>Views</small>
-                                        </h2>
+
+
+                <div ng-repeat="cards in ctrl.cards">
+
+                    <div class="col-xs-12 col-sm-6 col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="s-profile">
+                                    <div class="sp-pic">
+                                        <img src="uploads/users/{{cards.PhotoProfile}}" alt="">
                                     </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
+                                <div class="card-header text-center">
+                                    <h2>
+                                        {{cards.FirstName}} {{cards.MiddleName}} {{cards.LastName}}
+                                        <small>     {{cards.Label}}</small>
+                                    </h2>
+                                </div>
+                                <hr>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="card-iconic">
+                                                <a class="clearlink" href="#" data-toggle="tooltip"
+                                                   data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
+                                        <div class="col-xs-4">
+                                            <div class="card-iconic">
+                                                <a class="clearlink" href="#" data-toggle="tooltip"
+                                                   data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 views">
+                                            <h2 class="text-center">
+                                                {{cards.visit}}
+                                                <small>Views</small>
+                                            </h2>
+                                        </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
+                                </div>
+                                <hr>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="card-iconic">
+                                                <div class="dropdown">
+
+                                                    <!-- Single button -->
+                                                    <div class="btn-group" dropdown is-open="status.isopen">
+                                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                                                            SHARE <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li><a href="#">WhatsApp</a></li>
+                                                            <li><a href="#">Email</a></li>
+                                                            <li class="divider"></li>
+                                                            <li><a href="#">Separated link</a></li>
+                                                        </ul>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <div class="card-iconic">
+                                               <!-- <a class="clearlink" href="" ng-click="ctrl.preview()"><p>PREVIEW</p></a>-->
+                                                <button type="button" class="btn btn-info" ng-model="singleModel" uib-btn-checkbox>
+                                                    PREVIEW
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    John Kurt Schneider
-                                    <small>UX Research Manager</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            2041
-                                            <small>Views</small>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    Gerrard Maximillan
-                                    <small>Research Development</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            792
-                                            <small>Views</small>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    Katharin Helda
-                                    <small>Senior Public Relations</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            5101
-                                            <small>Views</small>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    Anthony Dean Caroll
-                                    <small>Front-end Development</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            575
-                                            <small>Views</small>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    Sita Andriana
-                                    <small>IxD Lead Manager</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            1413
-                                            <small>Views</small>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="s-profile">
-                                <div class="sp-pic">
-                                    <img src="assets/img/profile-pics/1.jpg" alt="">
-                                </div>
-                            </div>
-                            <div class="card-header text-center">
-                                <h2>
-                                    Luis Filipe Carolita
-                                    <small>Senior Programmer</small>
-                                </h2>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#" data-toggle="tooltip"
-                                               data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 views">
-                                        <h2 class="text-center">
-                                            1332
-                                            <small>Views</small>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle btn btn-link" data-toggle="dropdown">SHARE</a>
-                                                <ul class="dropdown-menu dm-icon" role="menu">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-comment-more"></i> Message</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-email"></i> E-Mail</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="zmdi zmdi-whatsapp"></i> WhatsApp</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">
-                                                            <i class="fa fa-telegram" aria-hidden="true"></i>Telegram</a>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <div class="card-iconic">
-                                            <a class="clearlink" href="#"><p>PREVIEW</p></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
+
             </div>
             <div class="modal fade" id="modalDefault" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
@@ -766,15 +352,7 @@
 </footer> -->
 
 <!-- Page Loader -->
-<div class="page-loader">
-    <div class="preloader pls-blue">
-        <svg class="pl-circular" viewBox="25 25 50 50">
-            <circle class="plc-path" cx="50" cy="50" r="20" />
-        </svg>
 
-        <p>Please wait...</p>
-    </div>
-</div>
 
 <!-- Older IE warning message -->
 <!--[if lt IE 9]>
@@ -819,21 +397,8 @@
 </div>
 <![endif]-->
 
-<!-- Javascript Libraries -->
-<script src="assets/vendors/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="assets/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-<script src="assets/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="assets/vendors/bower_components/Waves/dist/waves.min.js"></script>
-<script src="assets/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
-<script src="assets/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
 
-<script src="assets/vendors/bower_components/moment/min/moment.min.js"></script>
-<script src="assets/vendors/bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
-<script src="assets/vendors/bower_components/nouislider/distribute/nouislider.min.js"></script>
-<script src="assets/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-<script src="assets/vendors/bower_components/typeahead.js/dist/typeahead.bundle.min.js"></script>
-<script src="assets/vendors/summernote/dist/summernote-updated.min.js"></script>
 
 
 <!-- Placeholder for IE9 -->
@@ -847,5 +412,3 @@
 <script src="assets/vendors/farbtastic/farbtastic.min.js"></script>
 
 <script src="assets/js/app.min.js"></script>
-</body>
-</html>

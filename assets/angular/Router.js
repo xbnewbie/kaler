@@ -1,10 +1,11 @@
 app.config(function ($routeProvider) {
-    var template_url="http://172.16.36.18/idcard/index.php/template";
+    var template_url="http://localhost/idcard/index.php/template";
     $routeProvider .when("/",{
         publicAccess : false,
         templateUrl :template_url+"/menu_admin"
     }).when("/login",{
-        templateUrl : template_url+"/login",
+
+         templateUrl : template_url+"/login",
         publicAccess : true
     }).when("/admin",{
         publicAccess : false,
@@ -45,7 +46,12 @@ app.config(function ($routeProvider) {
         publicAccess : true,
        // controller : 'ViewCardController'
 
-    }).otherwise({
+    }).when("/cardhome",{
+        templateUrl : template_url +"/cardhome",
+
+        publicAccess:false
+    })
+        .otherwise({
         publicAccess : true,
             template : "Not found"
         })

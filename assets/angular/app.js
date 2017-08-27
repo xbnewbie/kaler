@@ -1,9 +1,10 @@
-var app = angular.module('myApp',["ngRoute","ngCookies"]);
 
 /**
  * Created by My Computer on 8/19/2017.
  */
 
+'use strict';
+var app = angular.module('myApp',["ngRoute","ngCookies",'ui.bootstrap','ngSanitize', 'ui.select']);
 
 app.factory('auth',function () {
     var user;

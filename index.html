@@ -1,29 +1,96 @@
 <!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <!--global assets !-->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="assets/css/toastr.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Openmidn Bussiness</title>
+
     <!-- angular-->
     <script type="text/javascript" src="assets/angular/angular.min.js"></script>
     <script type="text/javascript" src="assets/angular/angular-route.js"></script>
     <script type="text/javascript" src="assets/angular/angular-cookies.js"></script>
+
+    <!-- angular lib -->
+    <script src="assets/angular/angular-sanitize.js"></script>
+    <script src="assets/bower_components/angular-ui-select/dist/select.js"></script>
+
+    <!-- App -->
     <script type="text/javascript" src="assets/angular/app.js"></script>
     <script type="text/javascript" src="assets/angular/Router.js"></script>
     <script type="text/javascript" src="assets/angular/Services.js"></script>
     <script type="text/javascript" src="assets/angular/MainController.js"></script>
     <script type="text/javascript" src="assets/angular/ProfileController.js"></script>
+    <script type="text/javascript" src="assets/angular/SelectorController.js"></script>
     <!-- end angular -->
 
-    <title></title>
+    <!-- Javascript Libraries -->
+    <script src="assets/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="assets/js/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="assets/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="assets/vendors/bower_components/Waves/dist/waves.min.js"></script>
+    <script src="assets/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+    <script src="assets/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="assets/vendors/bower_components/moment/min/moment.min.js"></script>
+
+    <script src="assets/vendors/bower_components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+
+    <script src="assets/vendors/bower_components/nouislider/distribute/nouislider.min.js"></script>
+    <script src="assets/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="assets/vendors/bower_components/typeahead.js/dist/typeahead.bundle.min.js"></script>
+    <script src="assets/vendors/summernote/dist/summernote-updated.min.js"></script>
+    <!-- Vendor CSS -->
+    <link href="assets/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/nouislider/distribute/nouislider.min.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="assets/vendors/farbtastic/farbtastic.css" rel="stylesheet">
+    <link href="assets/vendors/bower_components/chosen/chosen.css" rel="stylesheet">
+    <link href="assets/vendors/summernote/dist/summernote.css" rel="stylesheet">
+
+    <link href="assets/bower_components/angular-ui-select/dist/select.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link href="assets/css/app_1.min.css" rel="stylesheet">
+    <link href="assets/css/app_2.min.css" rel="stylesheet">
+    <link href="assets/css/over.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Placeholder for IE9 -->
+    <!--[if IE 9 ]>
+    <script src="assets/vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+    <![endif]-->
+    <script src="assets/vendors/bower_components/chosen/chosen.jquery.js"></script>
+    <script src="assets/vendors/fileinput/fileinput.min.js"></script>
+    <script src="assets/vendors/input-mask/input-mask.min.js"></script>
+    <script src="assets/vendors/farbtastic/farbtastic.min.js"></script>
+    <script src="assets/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="assets/css/toastr.min.css">
+
+
+    <script src="assets/bower_components/angular-ui-select/dist/select.js"></script>
+    <link href="assets/bower_components/angular-ui-select/dist/select.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/select2.css">
+    <link rel="stylesheet" href="assets/css/selectize.default.css">
+
+
+
+
+
 </head>
 
-<body ng-app="myApp" ng-controller="MainController">
-{{status_message}}
-<ng-view>
+<body>
+<div  ng-app="myApp" ng-controller="MainController">
 
-</ng-view>
+    <ng-view>
+
+    </ng-view>
+</div>
+
 </body>
 </html>

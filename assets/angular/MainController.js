@@ -3,7 +3,7 @@
  */
 app.controller('MainController',function ($scope,$location,$http,$cookies,auth,Services) {
     var self = $scope;
-    var webservice_url ="http://172.16.36.18/idcard";
+    var webservice_url ="http://localhost/idcard";
     self.version="0.1";
     self.status_message ="";
 
@@ -23,7 +23,7 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
                 $cookies.put("UserName",result.UserName);
                 var user = {AuthKey : result.AuthKey,IdAppUser : result.IdAppUser,UserName : result.UserName};
                 auth.setUser(user);
-                $location.path('/admin');
+                $location.path('/cardhome');
            }else{
                toastr.error("Incorret Login");
                self.status_message="Login Inccoret";

@@ -1,5 +1,5 @@
 app.factory('Services', function($q, $rootScope,$http) {
-    var webservice_url ="http://172.16.36.18/idcard";
+    var webservice_url ="http://localhost/idcard";
 
     this.submitCompany = function(CompanyName,CompanyLogo) {
         var url=webservice_url+"/index.php/api/add_company";
@@ -151,6 +151,12 @@ console.log(item_profile);
         });
         return request;
 
+    }
+    this.ExtractDataFromJson = function (json) {
+        var result = angular.fromJson(json);
+        var  data = result.data;
+        return data;
+        
     }
 
     return this;

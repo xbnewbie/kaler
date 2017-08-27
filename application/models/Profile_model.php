@@ -18,9 +18,11 @@ class Profile_model extends CI_Model{
     }
 
     function get_profile_by_nickname($nickname){
-        $this->db->select('*');
+        $this->db->select('profile.*,item_profile.*');
         $this->db->from('profile');
-        $this->db->where('NickName',$nickname);
+        $this->db->join('item_profile','item_profile.IdProfile = profile.IdProfile');
+        $this->db->where('profile.NickName',$nickname);
+        $this->db->where('item_profile.KodeCategory','job');
         return $this->db->get()->row();
     }
 
@@ -34,9 +36,11 @@ class Profile_model extends CI_Model{
 
 
     function get_profile_by_company($IdCompany){
-        $this->db->select('*');
+        $this->db->select('profile.*,item_profile.*');
         $this->db->from('profile');
+        $this->db->join('item_profile','item_profile.IdProfile = profile.IdProfile');
         $this->db->where('IdCompany',$IdCompany);
+        $this->db->where('item_profile.KodeCategory','job');
          $profiles = $this->db->get()->result();
         return $profiles;
     }
