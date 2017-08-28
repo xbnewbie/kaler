@@ -2,7 +2,7 @@ app.config(function ($routeProvider) {
     var template_url="http://localhost/idcard/index.php/template";
     $routeProvider .when("/",{
         publicAccess : false,
-        templateUrl :template_url+"/menu_admin"
+        templateUrl : template_url +"/cardhome",
     }).when("/login",{
 
          templateUrl : template_url+"/login",

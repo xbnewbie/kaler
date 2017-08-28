@@ -1,4 +1,4 @@
-<header ng-controller="MainController" id="header" class="clearfix" data-ma-theme="bluepurple"> <!-- Make sure to change both class and data-current-skin when switching sking manually -->
+<header ng-controller="MainController"  id="header" class="clearfix" data-ma-theme="bluepurple"> <!-- Make sure to change both class and data-current-skin when switching sking manually -->
     <ul class="h-inner clearfix">
         <li class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar">
             <div class="line-wrap">
@@ -246,14 +246,14 @@
                                     <div class="row">
                                         <div class="col-xs-4">
                                             <div class="card-iconic">
-                                                <a class="clearlink" href="#" data-toggle="tooltip"
-                                                   data-placement="bottom" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
+                                                <a class="clearlink" href="" data-toggle="tooltip"
+                                                   data-placement="bottom" ng-click="ctrl.editCard(cards.NickName)" title="Edit Card"><i class="fa fa-vcard-o" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
                                         <div class="col-xs-4">
                                             <div class="card-iconic">
-                                                <a class="clearlink" href="#" data-toggle="tooltip"
-                                                   data-placement="bottom" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                                <a class="clearlink" href="" data-toggle="tooltip"
+                                                   data-placement="bottom" ng-click="ctrl.deleteCard(cards.IdProfile,cards.NickName)" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                             </div>
                                         </div>
                                         <div class="col-xs-4 views">

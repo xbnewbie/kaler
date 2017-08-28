@@ -33,6 +33,15 @@ class Profile_model extends CI_Model{
         return $this->db->get()->result();
     }
 
+    function delete_profile($IdProfile){
+        $this->db->where('IdProfile',$IdProfile);
+        $this->db->delete('profile');
+    }
+
+    function delete_item_profile($IdProfile){
+        $this->db->where('IdProfile',$IdProfile);
+        $this->db->delete('item_profile');
+    }
 
     function get_profile_by_company($IdCompany){
         $this->db->select('profile.*,item_profile.*');
@@ -79,10 +88,7 @@ class Profile_model extends CI_Model{
        return $this->db->insert('item_profile',$item_profile);
     }
 
-    function delete_item_profile($IdProfile){
-        $this->db->where('IdProfile',$IdProfile);
-        return $this->db->delete('item_profile');
-    }
+
 
     function get_all_item_category(){
         $this->db->select("*");

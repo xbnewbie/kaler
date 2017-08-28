@@ -105,6 +105,7 @@ app.controller('EditProfileController',['$scope','$routeParams','$location' ,'$h
     self.NickName = $routeParams.NickName;
 
 
+
     Services.GetCardByNickName(self.NickName).then(function success(response) {
 
         var result = response.data;
@@ -130,8 +131,7 @@ app.controller('EditProfileController',['$scope','$routeParams','$location' ,'$h
 
 
             self.item_profile =r.data.data;
-            console.log(self.item_profile.job);
-            console.log(self.item_profile);
+
             self.job = self.item_profile['job'];
 
             self.phone=self.item_profile['phone'];
@@ -179,16 +179,23 @@ app.controller('EditProfileController',['$scope','$routeParams','$location' ,'$h
 
     self.EditProfile = function () {
         console.log("td" + self.IdCompany);
-        var x= Services.EditProfile(self.IdProfile,self.FirstName,self.MiddleName,self.LastName,self.NickName,self.fileInputSelected[0],self.IdCompany, self.choices);
-        x.then(function sukses(response) {
 
+        var item_profile =[{Id : "job",key : "job", value : self.job},
+            {Id : "phone",key : "phone", value : self.phone},
+            { Id : "email",key : "email", value : self.email},
+            { Id : "facebook",key : "facebook", value : self.facebook},
+            { Id : "twitter",key : "twitter", value : self.twitter},
+            { Id : "linkedin",key : "linkedin", value : self.linkedin},
+            { Id : "whatsapp",key : "whatsapp", value : self.whatsapp},
+            { Id : "telegram",key : "telegram", value : self.telegram}
 
-            if(response.data.status==true){
-                toastr.info("sukses update");
-            }else{
-                toastr.error("Failed update");
-            }
+        ];
+        var x= Services.EditProfile(self.IdProfile,self.FirstName,self.MiddleName,self.LastName,self.NickName,self.fileInputSelected[0],self.IdCompany, item_profile);
+
+        x.then(function success(response) {
+            $location.path("/cardhome");
         }),function failed(response) {
+            toastr.warning("failed update data . please refresh");
             console.log(response);
         }
 

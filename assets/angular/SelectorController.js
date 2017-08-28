@@ -32,13 +32,22 @@ app.filter('propsFilter', function() {
     };
 });
 
-app.controller('SelectorControllerCompany', function ($scope, $http, $timeout,$interval,Services,$uibModal, $log, $document,Services) {
+app.controller('SelectorControllerCompany', function ($scope,$http, $timeout,$location,$interval,Services,$uibModal,$window, $log, $document,Services) {
     var self = this;
+    function init() {
+        console.log('controller started!');
+    }
 
     self.disabled = undefined;
     self.searchEnabled = undefined;
     self.CompanyList= [];
     self.cards       =[];
+
+
+
+
+
+
     self.setInputFocus = function (){
         $scope.$broadcast('UiSelectDemo1');
     };
@@ -101,12 +110,34 @@ app.controller('SelectorControllerCompany', function ($scope, $http, $timeout,$i
         var result = angular.fromJson(response.data);
         if(result.status==true){
             self.CompanyList= result.data;
+
         }else{
             console.log("Incorret login");
         }
     },function failed(r) {
         Toast.info("Failed fetching data");
     });
+
+
+    if(Services.getSelectedCompany() >0){
+
+        Services.GetCompany(Services.getSelectedCompany()).then(function sukses(r) {
+               var c = r.data.data;
+              self.CompanyList.selected = c;
+        });
+
+
+     Services.GetCardsByCompany(Services.getSelectedCompany()).then(function (response) {
+     var result = angular.fromJson(response.data);
+     if(result.status==true){
+     self.cards = result.data;
+     console.log(self.cards);
+     }else{
+     console.log("Incorret login");
+     }
+     });
+
+     }
 
 
     self.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
@@ -119,7 +150,7 @@ app.controller('SelectorControllerCompany', function ($scope, $http, $timeout,$i
            var result = angular.fromJson(response.data);
            if(result.status==true){
                self.cards = result.data;
-               console.log(self.cards);
+
            }else{
                console.log("Incorret login");
            }
@@ -161,6 +192,31 @@ app.controller('SelectorControllerCompany', function ($scope, $http, $timeout,$i
 
    self.test = function(){
        alert('test');
+   }
+
+   self.deleteCard = function (IdProfile,NickName) {
+       deleteUser = $window.confirm('Are you sure you want to delete ' + NickName +" ?");
+       if(deleteUser){
+            Services.DeleteCard(IdProfile).then(function (response) {
+
+                var result = angular.fromJson(response.data);
+                if(result.status==true){
+                    toastr.info("Success delete");
+                    self.GetCard();
+                }else{
+                    toastr.warning("Failed Delete");
+                }
+
+            },function (response) {
+                toastr.error("Network Error 177");
+            });
+       }else{
+            console.log("cancel delete");
+       }
+   }
+
+   self.editCard = function (NickName) {
+       $location.path("/edit_card/"+NickName);
    }
 
 });

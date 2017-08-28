@@ -51,6 +51,7 @@ function __construct()
         //  $this->load->view('view_card');
 
        $this->load->view('template_card_pub');
+        // $this->load->view('template_card_pub_long');
     }
     function edit_card(){
         $this->load->model('Profile_model');

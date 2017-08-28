@@ -67,7 +67,15 @@ class Api extends CI_Controller
         }
     }
 
+    function delete_card(){
+        $data = json_decode(file_get_contents('php://input'));
+        $IdProfile =$data->IdProfile;
+        $this->Profile_model->delete_profile($IdProfile);
+        $this->Profile_model->delete_item_profile($IdProfile);
+        $this->success_msg();
+    }
     function edit_profile(){
+
         $this->is_admin();
         $p = $this->input->post('profile');
         $i = $this->input->post('item_profile');
@@ -95,9 +103,7 @@ class Api extends CI_Controller
             ##try insert then insert item profile
             if ($this->Profile_model->update($profile->IdProfile,$data_profile)) {
                 ##delete old item_profile
-                if(!$this->Profile_model->delete_item_profile($profile->IdProfile)){
-                    $this->success_msg('error');
-                }else
+                $this->Profile_model->delete_item_profile($profile->IdProfile);
 
                 ##insert new ones
                     $msg=array();

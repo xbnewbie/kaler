@@ -97,13 +97,14 @@ app.factory('Services', function($q, $rootScope,$http) {
 
         var item_profile = angular.toJson(items);
         profile = angular.toJson(profile);
-        console.log("Mengirim ");
-console.log(item_profile);
-
         formdata = new FormData();
         formdata.append('profile',profile);
         formdata.append('item_profile',item_profile);
-        formdata.append('PhotoPicture', PhotoPicture);
+        if(PhotoPicture!=undefined){
+            formdata.append('PhotoPicture', PhotoPicture);
+        }else{
+            formdata.append('PhotoPicture', '');
+        }
         var request = $http.post(url,formdata,{
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
@@ -154,6 +155,14 @@ console.log(item_profile);
         var request = $http({
             method: "POST",
             url: webservice_url+"/index.php/api/get_item_profile",
+            data: {IdProfile: IdProfile}
+        });
+        return request;
+    }
+    this.DeleteCard = function (IdProfile) {
+        var request = $http({
+            method: "POST",
+            url: webservice_url+"/index.php/api/delete_card",
             data: {IdProfile: IdProfile}
         });
         return request;

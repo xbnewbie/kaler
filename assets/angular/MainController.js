@@ -192,7 +192,7 @@ app.controller("ViewCardController",function ($scope,$location ,$http,  $routePa
     self.company =[];
     console.log($location.search());
      Services.GetCardByNickName(self.NickName).then(function Success(response) {
-
+            console.log(response);
          if (response.data.status==true){
 
              self.card = response.data.data;
