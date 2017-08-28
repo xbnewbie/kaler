@@ -12,6 +12,9 @@ class Main extends CI_Controller{
         if($NickName=="admin"){
             redirect('index.html#!/login');
         }else{
+
+            $this->load->model('Profile_model');
+            $this->Profile_model->add_visitor($NickName);
             redirect("index.html#!/display_card/$NickName");
         }
     }

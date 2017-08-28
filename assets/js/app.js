@@ -1,5 +1,4 @@
 $(document).ready(function () {
-console.log("ha");
     $('body').on('click', '[data-ma-action]', function (e) {
         e.preventDefault();
 
@@ -924,7 +923,6 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 }
 
 $(window).load(function () {
-
     /*----------------------------------------------------------
         Page Loader
      -----------------------------------------------------------*/

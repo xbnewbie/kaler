@@ -183,9 +183,13 @@ app.controller("ViewCompanyController",function($scope,$location ,$http,  $route
 })
 
 app.controller("ViewCardController",function ($scope,$location ,$http,  $routeParams,Services) {
-    var self = $scope;
-    self.NickName = $routeParams.NickName;
 
+
+    var self = $scope;
+    self.urlShare =Services.getWebServiceUrl()+"/"+ $routeParams.NickName;
+    self.vcfurl =Services.getWebServiceUrl()+"/index.php/vcf/generate/"+ $routeParams.NickName;
+    self.NickName = $routeParams.NickName;
+    self.company =[];
     console.log($location.search());
      Services.GetCardByNickName(self.NickName).then(function Success(response) {
 
@@ -194,10 +198,15 @@ app.controller("ViewCardController",function ($scope,$location ,$http,  $routePa
              self.card = response.data.data;
              Services.GetItemProfile(self.card.IdProfile).then(function success(r) {
                  self.profiles = r.data.data;
-
+                 console.log(self.profiles);
 
              }),function failed(r) {
-                 toastr.error("error 193");
+                 toastr.error("Network Error 193");
+             }
+             Services.GetCompany(self.card.IdCompany).then(function Success(rs) {
+                 self.company = rs.data.data;
+             }),function failed(rs) {
+                 toastr.error("Network Error 204");
              }
 
          }else{
@@ -206,7 +215,7 @@ app.controller("ViewCardController",function ($scope,$location ,$http,  $routePa
          }
 
      }),function failed(response) {
-         toastr.error("Error");
+         toastr.error("Network Error");
      }
 
 

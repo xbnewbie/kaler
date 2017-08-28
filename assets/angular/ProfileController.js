@@ -22,9 +22,23 @@ app.controller('AddProfileController',['$scope','$routeParams','$location' ,'$ht
     };
 
     self.SaveProfile = function () {
-       var x= Services.SaveProfile(self.FirstName,self.MiddleName,self.LastName,self.NickName,self.fileInputSelected[0],$routeParams.IdCompany, self.choices);
+        console.log("adding to "+$routeParams.IdCompany);
+        var item_profile =[{Id : "job",key : "job", value : self.job},
+            {Id : "phone",key : "phone", value : self.phone},
+            { Id : "email",key : "email", value : self.email},
+            { Id : "facebook",key : "facebook", value : self.facebook},
+            { Id : "twitter",key : "twitter", value : self.twitter},
+            { Id : "linkedin",key : "linkedin", value : self.linkedin},
+            { Id : "whatsapp",key : "whatsapp", value : self.whatsapp},
+            { Id : "telegram",key : "telegram", value : self.telegram}
+
+        ];
+        self.NickName = self.FirstName + self.LastName;
+
+       var x= Services.SaveProfile(self.FirstName,self.MiddleName,self.LastName,self.NickName,self.fileInputSelected[0],$routeParams.IdCompany,$routeParams.IdTemplate, item_profile);
             x.then(function sukses(response) {
-                console.log(response);
+                toastr.info("Success");
+                $location.path("/cardhome");
             }),function failed(response) {
                 console.log(response);
             }
@@ -53,6 +67,7 @@ app.controller('AddProfileController',['$scope','$routeParams','$location' ,'$ht
         }
         self.inputs[input.$index] = input.item;
         self.choices[input.$index].id = input.item;
+        self.choices[input.$index].key = input.item;
     }
 
     self.removeChoice = function() {
@@ -65,6 +80,10 @@ app.controller('AddProfileController',['$scope','$routeParams','$location' ,'$ht
                 return true;
             }
         }
+    }
+
+    self.create_card = function (IdTemplate) {
+        $location.path("/add_profile/"+Services.getSelectedCompany() +"/"+IdTemplate);
     }
 
 }]);
@@ -87,38 +106,62 @@ app.controller('EditProfileController',['$scope','$routeParams','$location' ,'$h
 
 
     Services.GetCardByNickName(self.NickName).then(function success(response) {
+
         var result = response.data;
         self.card = result.data;
+
         self.IdCompany = self.card.IdCompany;
         self.FirstName = self.card.FirstName;
         self.MiddleName= self.card.MiddleName;
         self.LastName  = self.card.LastName;
         self.IdProfile = self.card.IdProfile;
+        self.job ="";
+        self.phone="";
+        self.email="";
+        self.facebook="";
+        self.twitter="";
+        self.linkedin="";
+        self.whatsapp="";
+        self.telegram="";
+
+
+        //get_item_profile
+        Services.GetItemProfile(self.IdProfile).then(function success(r) {
+
+
+            self.item_profile =r.data.data;
+            console.log(self.item_profile.job);
+            console.log(self.item_profile);
+            self.job = self.item_profile['job'];
+
+            self.phone=self.item_profile['phone'];
+            self.email=self.item_profile['email'];
+            self.facebook=self.item_profile['facebook'];
+            self.twitter=self.item_profile['twitter'];
+            self.linkedin=self.item_profile['linkedin'];
+            self.whatsapp=self.item_profile['whatsapp'];
+            self.telegram=self.item_profile['telegram'];
+
+        }),function failed(r){
+            console.log("Something wrong " + r);
+        }
+
+
+
 
         //get company
         var IdCompany = self.IdCompany;
-        console.log("debug" + self.FirstName);
+
         Services.GetCompany(self.IdCompany).then(function success(res) {
             var result = res.data;
             self.company = result.data;
-            console.log(result);
+
 
             self.CompanyName = self.company.CompanyName;
             self.CompanyLogo = self.company.CompanyLogo;
             self.IdCompany  = self.company.IdCompany;
 
-            //get_item_profile
-            Services.GetItemProfile(self.IdProfile).then(function success(r) {
-                 var result = r.data;
-                 self.item_profile = result.data;
-                 for( i=0;i<self.item_profile.length;i++){
-                    // self.inputs[0] = "kolak";
-                            console.log(self.item_profile[i].KodeCategory);
-                      self.choices.push({'id':self.item_profile[i].KodeCategory,'key':self.item_profile[i].KodeCategory,'value':self.item_profile[i].Label});
-                 }
-            }),function failed(r){
-                console.log("Something wrong " + r);
-            }
+
 
         }),function failed(res) {
             console.log("Something wrong " + res);

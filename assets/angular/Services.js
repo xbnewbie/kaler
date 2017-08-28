@@ -1,5 +1,12 @@
+
+
+
 app.factory('Services', function($q, $rootScope,$http) {
     var webservice_url ="http://localhost/idcard";
+    var selectedCompany =null;
+    this.getWebServiceUrl = function () {
+        return webservice_url;
+    }
 
     this.submitCompany = function(CompanyName,CompanyLogo) {
         var url=webservice_url+"/index.php/api/add_company";
@@ -25,6 +32,14 @@ app.factory('Services', function($q, $rootScope,$http) {
         xhr.send(formdata);
         return deferred.promise;
     };
+
+    this.getSelectedCompany = function(){
+        return this.selectedCompany;
+    }
+    this.setSelectedCompany = function (IdCompany) {
+        console.log("set selected company "+ IdCompany);
+        this.selectedCompany = IdCompany;
+    }
 
     this.editCompany = function(IdCompany,CompanyName,CompanyLogo) {
         var url=webservice_url+"/index.php/api/edit_company";
@@ -52,18 +67,20 @@ app.factory('Services', function($q, $rootScope,$http) {
         return deferred.promise;
     };
 
-    this.SaveProfile = function(FirstName,MiddleName,LastName,NickName,PhotoPicture,IdCompany,items) {
+    this.SaveProfile = function(FirstName,MiddleName,LastName,NickName,PhotoPicture,IdCompany,IdTheme,items) {
         var url=webservice_url+"/index.php/api/save_profile";
 
-        var profile = {FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,NickName:NickName,IdCompany:IdCompany};
+        var profile = {FirstName: FirstName,MiddleName: MiddleName,LastName : LastName,NickName:NickName,IdCompany:IdCompany,IdTheme : IdTheme};
 
 
         var item_profile = angular.toJson(items);
         profile = angular.toJson(profile);
+        console.log(item_profile);
         formdata = new FormData();
         formdata.append('profile',profile);
         formdata.append('item_profile',item_profile);
         formdata.append('PhotoPicture', PhotoPicture);
+
         var request = $http.post(url,formdata,{
             transformRequest: angular.identity,
             headers: {'Content-Type': undefined}
@@ -160,4 +177,5 @@ console.log(item_profile);
     }
 
     return this;
-})
+});
+

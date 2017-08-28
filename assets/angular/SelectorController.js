@@ -32,7 +32,7 @@ app.filter('propsFilter', function() {
     };
 });
 
-app.controller('SelectorControllerCompany', function ($scope, $http, $timeout, $interval,Services) {
+app.controller('SelectorControllerCompany', function ($scope, $http, $timeout,$interval,Services,$uibModal, $log, $document,Services) {
     var self = this;
 
     self.disabled = undefined;
@@ -113,6 +113,7 @@ app.controller('SelectorControllerCompany', function ($scope, $http, $timeout, $
 
 
    self.GetCard = function () {
+       Services.setSelectedCompany(self.CompanyList.selected.IdCompany);
        var IdCompany =self.CompanyList.selected.IdCompany;
        Services.GetCardsByCompany(IdCompany).then(function (response) {
            var result = angular.fromJson(response.data);
@@ -125,7 +126,55 @@ app.controller('SelectorControllerCompany', function ($scope, $http, $timeout, $
        });
    };
 
-   self.preview = function(){
-       alert('action preview');
+   self.preview = function(NickName){
+       var u =Services.getWebServiceUrl()+"/"+NickName;
+       console.log(u);
+      window.open(u);
    }
+
+    self.button_add = function (size, parentSelector) {
+        var parentElem = parentSelector ?
+            angular.element($document[0].querySelector('.cardhome ' + parentSelector)) : undefined;
+        var modalInstance = $uibModal.open({
+            animation: self.animationsEnabled,
+            ariaLabelledBy: 'modal-title',
+            controller : 'ModalInstanceCtrl',
+            controllerAs: '$ctrl',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: Services.getWebServiceUrl()+'/index.php/template/modal_create',
+
+            size: size,
+            appendTo: parentElem,
+            resolve: {
+                items: function () {
+                    return self.items;
+                }
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            self.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+    };
+
+   self.test = function(){
+       alert('test');
+   }
+
+});
+
+app.controller('ModalInstanceCtrl', function ($uibModalInstance, items,$location,Services) {
+    var $ctrl = this;
+
+    $ctrl.create_company = function () {
+        $location.path('/add_company');
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    $ctrl.create_card = function () {
+        $location.path("/choose_template/"+Services.getSelectedCompany());
+        $uibModalInstance.dismiss('cancel');
+    };
 });

@@ -1,5 +1,7 @@
 <div ng-controller="ViewCardController">
     {{card}}
+    {{company}}
+    {{profiles}}
 <hr>
     List Item
     <hr>

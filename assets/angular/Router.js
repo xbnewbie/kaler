@@ -29,7 +29,7 @@ app.config(function ($routeProvider) {
         publicAccess : false,
         templateUrl :template_url+"/edit_company",
         controller : 'EditCompanyController'
-    }).when("/add_profile/:IdCompany",{
+    }).when("/add_profile/:IdCompany/:IdTemplate",{
         publicAccess : false,
         templateUrl : template_url+"/add_profile",
         controller : 'AddProfileController'
@@ -49,6 +49,10 @@ app.config(function ($routeProvider) {
     }).when("/cardhome",{
         templateUrl : template_url +"/cardhome",
 
+        publicAccess:false
+    }).when("/choose_template/:IdCompany",{
+        templateUrl : template_url +"/choose_template",
+        controller : 'AddProfileController',
         publicAccess:false
     })
         .otherwise({

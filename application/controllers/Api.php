@@ -76,7 +76,7 @@ class Api extends CI_Controller
             $item_profile = json_decode($i);
 
             $data_profile = array("IdProfile" => $profile->IdProfile, "FirstName" => $profile->FirstName, "MiddleName" => $profile->MiddleName,
-                "LastName" => $profile->LastName, "NickName" => $profile->NickName, "IdCompany" => $profile->IdCompany);
+                "LastName" => $profile->LastName, "NickName" => $profile->NickName, "IdCompany" => $profile->IdCompany,"IdTheme" => $profile->IdProfile);
 
 
             if (!empty($_FILES['PhotoPicture'])) {
@@ -130,10 +130,15 @@ class Api extends CI_Controller
     }
 
     function get_item_profile(){
-        $data = json_decode(file_get_contents('php://input'));
+       $data = json_decode(file_get_contents('php://input'));
         $IdProfile =$data->IdProfile;
         $items = $this->Profile_model->get_item_profile($IdProfile);
-        $this->success_msg($items);
+        $data= array();
+        foreach($items as $item){
+            $data[$item->KodeCategory] = $item->Label;
+        }
+
+         $this->success_msg($data);
     }
 
     ##company_api
@@ -141,6 +146,7 @@ class Api extends CI_Controller
     {
         $this->is_admin();
         $companyName = $this->input->post('CompanyName');
+        $address     = $this->input->post('Address');
         $config['upload_path'] = './uploads/company/';
         $config['allowed_types'] = 'gif|jpg|png';
         $this->load->library('upload', $config);
@@ -150,7 +156,7 @@ class Api extends CI_Controller
         } else {
             $data = array('upload_data' => $this->upload->data());
             $companyLogo = $data['upload_data']['file_name'];
-            $arr = array("CompanyName" => $companyName, "CompanyLogo" => $companyLogo);
+            $arr = array("CompanyName" => $companyName, "CompanyLogo" => $companyLogo,"address"=>$address);
             if ($this->Company_model->insert($arr)) {
                 $this->success_add_company_msg($companyName, $companyLogo);
             } else {

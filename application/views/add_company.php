@@ -8,6 +8,7 @@
 <div ng-controller="CompanyController">
 
         <input type="text" ng-model="CompanyName" name="CompanyName">
+    <input type="text" ng-model="Address" name="Address">
     <input type="file" multiple onchange="angular.element(this).scope().fileNameChanged(this)"/>
       <button ng-click="add()">Add Company</button>
 

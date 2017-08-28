@@ -29,7 +29,6 @@ class Profile_model extends CI_Model{
     function get_item_profile($IdProfile){
         $this->db->select('*');
         $this->db->from('item_profile');
-        $this->db->join('item_category','item_category.Kode = item_profile.KodeCategory','left');
         $this->db->where('item_profile.IdProfile',$IdProfile);
         return $this->db->get()->result();
     }
@@ -97,6 +96,11 @@ class Profile_model extends CI_Model{
         return $this->db->get()->row();
     }
 
+    function add_visitor($Nickname){
+        $this->db->where('NickName',$Nickname);
+        $this->db->set('visit', '`visit`+ 1', FALSE);
+        $this->db->update('profile');
+    }
 
 
 }

@@ -25,16 +25,13 @@ class vcf extends CI_Controller{
         var_dump($card);*/
 
 
-        foreach ($items as $item){
-             $category = $item->Kode;
-             if($category =="phone"){
-                 $phone_number=$item->Label;
-             }else if($category=="email"){
-                 $email= $item->Label;
-             }else if($category=="job"){
-                 $job_title= $item->Label;
-             }
-        }
+
+                 $phone_number=$items['phone'];
+
+                 $email= $items['email'];
+
+                 $job_title= $items['job'];
+
 
         $vcard = new VCard();
 

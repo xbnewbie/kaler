@@ -1,4 +1,4 @@
-<header id="header" class="clearfix" data-ma-theme="bluepurple"> <!-- Make sure to change both class and data-current-skin when switching sking manually -->
+<header ng-controller="MainController" id="header" class="clearfix" data-ma-theme="bluepurple"> <!-- Make sure to change both class and data-current-skin when switching sking manually -->
     <ul class="h-inner clearfix">
         <li class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar">
             <div class="line-wrap">
@@ -18,7 +18,7 @@
                     <p class="m-r-20">Brevy M Prabowo</p>
                 </li>
                 <li>
-                    <button class="btn btn-primary bgm-red m-t-5">Logout</button>
+                    <button ng-click="logout()" class="btn btn-primary bgm-red m-t-5">Logout</button>
                 </li>
                 <!--  <li>
                      <div class="s-profile">
@@ -34,7 +34,7 @@
     </ul>
 </header>
 
-<section id="main" ng-controller="SelectorControllerCompany as ctrl">
+<section id="main" ng-controller="SelectorControllerCompany as ctrl" class="cardhome">
     <!-- Mobile Menu -->
     <aside id="sidebar" class="sidebar sidebar-alt c-overflow">
         <div class="s-profile">
@@ -216,7 +216,7 @@
                     <div class="col-md-6 col-sm-6 col-xs-6">
                         <ul class="actions">
                             <li>
-                                <button data-toggle="modal" href="#modalDefault" class="btn bgm-green btn-icon waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></button>
+                                <button ng-click="ctrl.button_add()" data-toggle="modal" href="#modalDefault" class="btn bgm-green btn-icon waves-effect waves-circle waves-float"><i class="zmdi zmdi-plus"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -257,10 +257,10 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-4 views">
-                                            <h2 class="text-center">
+                                            <h3 class="text-center">
                                                 {{cards.visit}}
                                                 <small>Views</small>
-                                            </h2>
+                                            </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -272,11 +272,11 @@
                                                 <div class="dropdown">
 
                                                     <!-- Single button -->
-                                                    <div class="btn-group" dropdown is-open="status.isopen">
-                                                        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
+                                                    <div class="btn-group" uib-dropdown is-open="status.isopen">
+                                                        <button type="button" class="btn btn-primary dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
                                                             SHARE <span class="caret"></span>
                                                         </button>
-                                                        <ul class="dropdown-menu" role="menu">
+                                                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                                             <li><a href="#">WhatsApp</a></li>
                                                             <li><a href="#">Email</a></li>
                                                             <li class="divider"></li>
@@ -285,13 +285,15 @@
                                                     </div>
 
 
+
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="card-iconic">
                                                <!-- <a class="clearlink" href="" ng-click="ctrl.preview()"><p>PREVIEW</p></a>-->
-                                                <button type="button" class="btn btn-info" ng-model="singleModel" uib-btn-checkbox>
+                                                <button type="button" ng-click="ctrl.preview(cards.NickName)" class="btn btn-info" ng-model="singleModel" uib-btn-checkbox>
                                                     PREVIEW
                                                 </button>
                                             </div>
@@ -307,34 +309,12 @@
 
 
             </div>
-            <div class="modal fade" id="modalDefault" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Create New</h4>
-                        </div>
-                        <div class="modal-body text-center m-t-30">
-                            <div class="col-md-6">
-                                <i class="zmdi zmdi-developer-board ico-lg"></i>
-                                <h4>Create New Company</h4>
-                                <button type="button" class="btn btn-primary bgm-orange waves-effect m-30" data-dismiss="modal">Choose
-                                </button>
-                            </div>
-                            <div class="col-md-6">
-                                <i class="zmdi zmdi-account-box-o ico-lg"></i>
-                                <h4>Create New Card</h4>
-                                <button type="button" class="btn btn-primary bgm-orange waves-effect m-30" data-dismiss="modal">Choose
-                                </button>
-                            </div>
-                        </div>
-                        <div class="modal-footer m-t-30">
-                            <!-- <button type="button" class="btn btn-link waves-effect">Next</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Cancel
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <!-- modal -->
+
+
+
+
         </div>
     </section>
 </section>

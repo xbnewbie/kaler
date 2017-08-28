@@ -48,7 +48,9 @@ function __construct()
     }
 
     function view_card(){
-        $this->load->view('view_card');
+        //  $this->load->view('view_card');
+
+       $this->load->view('template_card_pub');
     }
     function edit_card(){
         $this->load->model('Profile_model');
@@ -59,5 +61,13 @@ function __construct()
 
     function cardhome(){
         $this->load->view('cardhome');
+    }
+
+    function modal_create(){
+        $this->load->view('modal_create');
+    }
+
+    function choose_template(){
+        $this->load->view('choose_template');
     }
 }

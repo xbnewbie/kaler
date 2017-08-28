@@ -4,7 +4,7 @@
  */
 
 'use strict';
-var app = angular.module('myApp',["ngRoute","ngCookies",'ui.bootstrap','ngSanitize', 'ui.select']);
+var app = angular.module('myApp',["ngRoute","ngCookies",'ui.bootstrap','ngSanitize', 'ui.select','ngAnimate']);
 
 app.factory('auth',function () {
     var user;
