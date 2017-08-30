@@ -71,4 +71,8 @@ function __construct()
     function choose_template(){
         $this->load->view('choose_template');
     }
+
+    function card_collection(){
+        $this->load->view('card_collection');
+    }
 }

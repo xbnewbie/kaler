@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'JeroenDesloovere\\VCard\\' => array($vendorDir . '/jeroendesloovere/vcard/src'),
+    'Facebook\\' => array($vendorDir . '/facebook/graph-sdk/src/Facebook'),
 );

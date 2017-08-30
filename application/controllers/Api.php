@@ -68,6 +68,7 @@ class Api extends CI_Controller
     }
 
     function delete_card(){
+        $this->is_admin();
         $data = json_decode(file_get_contents('php://input'));
         $IdProfile =$data->IdProfile;
         $this->Profile_model->delete_profile($IdProfile);
@@ -222,6 +223,20 @@ class Api extends CI_Controller
             }
         }
 
+    }
+
+    function getCardCollection(){
+        if(isset($_SESSION['facebook_access_token'])){
+
+        }else{
+
+        }
+
+       $data = json_decode(file_get_contents('php://input'));
+        $IdFacebook ='10207606250754648';// $data->IdFacebook;
+        $result =$this->Profile_model->getAllProfileCollection($IdFacebook);
+
+         $this->success_msg($result);
     }
 
 

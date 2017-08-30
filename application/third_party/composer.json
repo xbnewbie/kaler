@@ -1,5 +1,6 @@
 {
     "require": {
-        "jeroendesloovere/vcard": "^1.5"
+        "jeroendesloovere/vcard": "^1.5",
+        "facebook/graph-sdk": "^5.6"
     }
 }

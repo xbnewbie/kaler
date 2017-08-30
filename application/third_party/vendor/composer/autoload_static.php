@@ -6,10 +6,18 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit53dc2d55bb9c5fefb8df009a8156af36
 {
+    public static $files = array (
+        'c65d09b6820da036953a371c8c73a9b1' => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook/polyfills.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'J' => 
         array (
             'JeroenDesloovere\\VCard\\' => 23,
+        ),
+        'F' => 
+        array (
+            'Facebook\\' => 9,
         ),
     );
 
@@ -17,6 +25,10 @@ class ComposerStaticInit53dc2d55bb9c5fefb8df009a8156af36
         'JeroenDesloovere\\VCard\\' => 
         array (
             0 => __DIR__ . '/..' . '/jeroendesloovere/vcard/src',
+        ),
+        'Facebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/facebook/graph-sdk/src/Facebook',
         ),
     );
 

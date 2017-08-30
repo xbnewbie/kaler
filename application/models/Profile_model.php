@@ -108,5 +108,27 @@ class Profile_model extends CI_Model{
         $this->db->update('profile');
     }
 
+    function insertProfileCollection($pc){
+
+        $this->db->where('IdFacebook',$pc['IdFacebook']);
+        $this->db->where('IdProfile',$pc['IdProfile']);
+        $q = $this->db->get('profile_collection');
+        if ( $q->num_rows() == 0 ){
+            $this->db->insert('profile_collection',$pc);
+        }
+
+    }
+
+    function getAllProfileCollection($IdFacebook){
+        $this->db->select('profile.*,item_profile.*,company.*');
+        $this->db->from('Profile_collection');
+        $this->db->join('profile','profile.IdProfile = profile_collection.IdProfile','left');
+        $this->db->join('company','company.IdCompany = profile.IdCompany','left');
+        $this->db->join('item_profile','item_profile.IdProfile = profile.IdProfile','left');
+        $this->db->where('IdFacebook',$IdFacebook);
+        $this->db->where('item_profile.KodeCategory','job');
+        return $this->db->get()->result();
+    }
+
 
 }

@@ -21,16 +21,21 @@ class vcf extends CI_Controller{
         $profile =   $company = $this->Company_model->getById($card->IdCompany);
         $items = $this->Profile_model->get_item_profile($card->IdProfile);
 
-/*  var_dump($profile);
-        var_dump($card);*/
+        $data= array();
+        foreach($items as $item){
+            $data[$item->KodeCategory] = $item->Label;
+        }
 
 
 
-                 $phone_number=$items['phone'];
 
-                 $email= $items['email'];
 
-                 $job_title= $items['job'];
+
+                 $phone_number=$data['phone'];
+
+                 $email= $data['email'];
+
+                 $job_title= $data['job'];
 
 
         $vcard = new VCard();

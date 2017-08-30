@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="assets/bower_components/clientjs/dist/client.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<div id="nomorId">
+
+</div>
+<script>
+
+    var client = new ClientJS(); // Create A New Client Object
+
+    if( client.isMobile() ) { // Check For Mobile Device
+
+        if( client.isMobileAndroid() ) { // Check For Android
+           // alert('We Got Us Some Android!');
+
+        }else if( client.isMobileIOS() ){ // Check For iOS
+           // alert('We Got Us Some Apple iOS!');
+
+        }else{
+         //   alert('Unknown Mobile Device...');
+        }
+    }
+
+    var device = client.getDevice(); // Get Device
+
+    console.log( device );
+    var fingerprint = client.getFingerprint(); // Get Client's Fingerprint
+
+    document.getElementById('nomorId').innerText = device;
+
+</script>
+
+</body>
+</html>
