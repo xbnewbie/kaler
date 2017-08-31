@@ -24,6 +24,9 @@ class Main extends CI_Controller
 
     }
 
+    function fb_enabled(){
+        return false;
+    }
 
     function index()
     {
@@ -37,7 +40,8 @@ class Main extends CI_Controller
             }
             $profile = $this->Profile_model->get_profile_by_nickname($NickName);
             setcookie("last_uri_request", $_SERVER['REQUEST_URI'], time() + 1000, "/");
-            $this->helper = $this->fb->getRedirectLoginHelper();
+
+          /*  $this->helper = $this->fb->getRedirectLoginHelper();
             if (!isset($_SESSION['facebook_access_token'])) {
                 $this->requestPermission();
             } else {
@@ -64,7 +68,7 @@ class Main extends CI_Controller
                 set_cookie($cookie);
                 $pc = array("IdFacebook" => $IdFacebook, "IdProfile" => $profile->IdProfile);
                 $this->Profile_model->insertProfileCollection($pc);
-            }
+            }*/
 
 
             $this->Profile_model->add_visitor($NickName);

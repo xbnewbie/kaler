@@ -20,6 +20,10 @@ app.factory('auth',function () {
 
 });
 
+app.config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|callto|file|sms|tel):/);
+}]);
+
 app.run(['$rootScope', '$location','$cookies','auth','$route', function ($rootScope, $location,$cookies,auth,$route) {
 
 

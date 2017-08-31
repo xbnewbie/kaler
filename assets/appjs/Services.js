@@ -2,7 +2,7 @@
 
 
 app.factory('Services', function($q, $rootScope,$http) {
-    var webservice_url ="http://localhost/idcard";
+    var webservice_url ="http://172.20.10.3/idcard";
     var selectedCompany =null;
     this.getWebServiceUrl = function () {
         return webservice_url;

@@ -18,18 +18,38 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-5">
+
                     <ul class="h-inner-publik">
                         <li class="pull-right ico-md">
-                            <ul class="hi-menu">
-                                <li>
-                                    <a href="{{vcfurl}}" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Save Contact"><i class="zmdi zmdi-download"></i></a>
-                                </li>
-                                <li>
-                                    <a href="https://api.whatsapp.com/send?text=urlencodedtext" data-action="share/whatsapp/share" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Share"><i class="zmdi zmdi-share"></i></a>
-                                </li>
+                            <ul class="hi-menu"  uib-dropdown on-toggle="toggled(open)">
+
+                            <li>
+                                        <a href="{{vcfurl}}" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Save Contact" style=" text-decoration: none;"><i class="zmdi zmdi-download"></i></a>
+
+                                    </li>
+                                   <li>
+                                       <a href="" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Share" uib-dropdown-toggle>
+                                           <i class="zmdi zmdi-share"></i>
+                                       </a>
+                                   </li>
+
+                                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                        <li>
+                                            <a href="whatsapp://send?text=urlencodedtext" data-action="share/whatsapp/share">WhatsApp</a>
+                                        </li>
+                                        <li>
+                                            <a href="tg://msg_url?url=https://www.google.com.mx/"">Telegram</a>
+                                        </li>
+                                    </ul>
+
+
+
+
                             </ul>
                         </li>
                     </ul>
+
+
                 </div>
             </div>
 

@@ -1,5 +1,5 @@
 app.config(function ($routeProvider) {
-    var template_url="http://localhost/idcard/template";
+    var template_url="http://172.20.10.3/idcard/template";
     $routeProvider .when("/",{
         publicAccess : false,
         templateUrl : template_url +"/cardhome",
@@ -58,6 +58,9 @@ app.config(function ($routeProvider) {
         publicAccess : true,
         templateUrl : template_url +"/card_collection"
 
+    }).when("/load",{
+        publicAccess :true,
+        templateUrl :"openmind_login.html"
     })
         .otherwise({
         publicAccess : true,
