@@ -32,7 +32,7 @@ app.filter('propsFilter', function() {
     };
 });
 
-app.controller('SelectorControllerCompany', function ($scope,$http, $timeout,$location,$interval,Services,$uibModal,$window, $log, $document,Services) {
+app.controller('SelectorControllerCompany', function ($scope,$rootScope,$http, $timeout,$location,$interval,Services,$uibModal,$window, $log, $document,Services,usSpinnerService) {
     var self = this;
     function init() {
         console.log('controller started!');
@@ -43,68 +43,28 @@ app.controller('SelectorControllerCompany', function ($scope,$http, $timeout,$lo
     self.CompanyList= [];
     self.cards       =[];
 
+    self.startSpin = function() {
+        if (!self.spinneractive) {
+            usSpinnerService.spin('spinner-1');
 
-
-
-
-
-    self.setInputFocus = function (){
-        $scope.$broadcast('UiSelectDemo1');
+        }
     };
-
-    self.enable = function() {
-        self.disabled = false;
+    self.stopSpin = function() {
+        if ($scope.spinneractive) {
+            usSpinnerService.stop('spinner-1');
+        }
     };
+    self.spinneractive = false;
+    $rootScope.$on('us-spinner:spin', function(event, key) {
+        self.spinneractive = true;
+    });
 
-    self.disable = function() {
-        self.disabled = true;
-    };
+    $rootScope.$on('us-spinner:stop', function(event, key) {
+        self.spinneractive = false;
+    });
 
-    self.enableSearch = function() {
-        self.searchEnabled = true;
-    };
 
-    self.disableSearch = function() {
-        self.searchEnabled = false;
-    };
-
-    self.clear = function() {
-        self.Company.selected = undefined;
-        self.address.selected = undefined;
-        self.country.selected = undefined;
-    };
-
-    self.someGroupFn = function (item){
-
-        if (item.CompanyName[0] >= 'A' && item.CompanyName[0] <= 'M')
-            return 'From A - M';
-
-        if (item.CompanyName[0] >= 'N' && item.CompanyName[0] <= 'Z')
-            return 'From N - Z';
-
-    };
-
-    self.firstLetterGroupFn = function (item){
-        return item.CompanyName[0];
-    };
-
-    self.reverseOrderFilterFn = function(groups) {
-        return groups.reverse();
-    };
-
-    self.counter = 0;
-    self.onSelectCallback = function (item, model){
-        self.counter++;
-        self.eventResult = {item: item, model: model};
-    };
-
-    self.removed = function (item, model) {
-        self.lastRemoved = {
-            item: item,
-            model: model
-        };
-    };
-
+    self.startSpin();
 
     Services.GetListCompany().then(function success(response) {
         var result = angular.fromJson(response.data);
@@ -138,12 +98,14 @@ app.controller('SelectorControllerCompany', function ($scope,$http, $timeout,$lo
         });
 
      }
-
+    self.stopSpin();
 
     self.availableColors = ['Red','Green','Blue','Yellow','Magenta','Maroon','Umbra','Turquoise'];
 
 
    self.GetCard = function () {
+       self.startSpin();
+
        Services.setSelectedCompany(self.CompanyList.selected.IdCompany);
        var IdCompany =self.CompanyList.selected.IdCompany;
        Services.GetCardsByCompany(IdCompany).then(function (response) {
@@ -155,7 +117,10 @@ app.controller('SelectorControllerCompany', function ($scope,$http, $timeout,$lo
                console.log("Incorret login");
            }
        });
+       self.stopSpin();
    };
+
+
 
    self.preview = function(NickName){
        var u =Services.getWebServiceUrl()+"/"+NickName;
@@ -218,6 +183,67 @@ app.controller('SelectorControllerCompany', function ($scope,$http, $timeout,$lo
    self.editCard = function (NickName) {
        $location.path("/edit_card/"+NickName);
    }
+
+
+
+
+    self.setInputFocus = function (){
+        $scope.$broadcast('UiSelectDemo1');
+    };
+
+    self.enable = function() {
+        self.disabled = false;
+    };
+
+    self.disable = function() {
+        self.disabled = true;
+    };
+
+    self.enableSearch = function() {
+        self.searchEnabled = true;
+    };
+
+    self.disableSearch = function() {
+        self.searchEnabled = false;
+    };
+
+    self.clear = function() {
+        self.Company.selected = undefined;
+        self.address.selected = undefined;
+        self.country.selected = undefined;
+    };
+
+    self.someGroupFn = function (item){
+
+        if (item.CompanyName[0] >= 'A' && item.CompanyName[0] <= 'M')
+            return 'From A - M';
+
+        if (item.CompanyName[0] >= 'N' && item.CompanyName[0] <= 'Z')
+            return 'From N - Z';
+
+    };
+
+    self.firstLetterGroupFn = function (item){
+        return item.CompanyName[0];
+    };
+
+    self.reverseOrderFilterFn = function(groups) {
+        return groups.reverse();
+    };
+
+    self.counter = 0;
+    self.onSelectCallback = function (item, model){
+        self.counter++;
+        self.eventResult = {item: item, model: model};
+    };
+
+    self.removed = function (item, model) {
+        self.lastRemoved = {
+            item: item,
+            model: model
+        };
+    };
+
 
 });
 

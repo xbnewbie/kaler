@@ -35,8 +35,8 @@ class User extends CI_Controller{
                setcookie("Authkey",$user->UserPass,time()+1500,"/");
                setcookie("IdAppUser",$user->IdAppUser,time()+1500,"/");
                setcookie("UserName",$user->UserName,time()+1500,"/");
-                $arr = array("status" => true,"Authkey" =>$user->UserPass,"IdAppUser" =>$user->IdAppUser,"UserName" => $user->UserName);
-                  $this->success_msg();
+                $arr = array("status" => true,"Authkey" =>$user->UserPass,"IdAppUser" =>$user->IdAppUser,"UserName" => $user->UserName,"UserNick" =>$user->UserNick);
+                echo json_encode($arr);
             }else{
                 $this->error_msg();
             }

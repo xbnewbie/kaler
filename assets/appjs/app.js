@@ -4,7 +4,7 @@
  */
 
 'use strict';
-var app = angular.module('myApp',["ngRoute","ngCookies",'ui.bootstrap','ngSanitize', 'ui.select','ngAnimate']);
+var app = angular.module('myApp',["ngRoute","ngCookies",'ui.bootstrap','ngSanitize', 'ui.select','ngAnimate','angularSpinner']);
 
 app.factory('auth',function () {
     var user;
@@ -21,7 +21,7 @@ app.factory('auth',function () {
 });
 
 app.config(['$compileProvider', function ($compileProvider) {
-    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|callto|file|sms|tel):/);
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|whatsapp|tg|callto|file|sms|tel):/);
 }]);
 
 app.run(['$rootScope', '$location','$cookies','auth','$route', function ($rootScope, $location,$cookies,auth,$route) {
@@ -34,7 +34,8 @@ app.run(['$rootScope', '$location','$cookies','auth','$route', function ($rootSc
             var AuthKey = $cookies.get("Authkey");
             var IdAppUser = $cookies.get("IdAppUser");
             var UserName  = $cookies.get("UserName");
-            var user = {AuthKey : AuthKey,IdAppUser : IdAppUser,UserName : UserName};
+            var UserNick = $cookies.get("UserNick");
+            var user = {AuthKey : AuthKey,IdAppUser : IdAppUser,UserName : UserName,"UserNick" : UserNick};
             console.log("cek Login");
             if(AuthKey){
                 auth.setUser(user);
@@ -70,4 +71,6 @@ app.directive('fileChange', function() {
             })
         },
     }
-})
+});
+
+

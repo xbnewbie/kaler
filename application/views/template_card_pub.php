@@ -35,10 +35,10 @@
 
                                     <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
                                         <li>
-                                            <a href="whatsapp://send?text=urlencodedtext" data-action="share/whatsapp/share">WhatsApp</a>
+                                            <a href="whatsapp://send?text={{urlShare}}" data-action="share/whatsapp/share">WhatsApp</a>
                                         </li>
                                         <li>
-                                            <a href="tg://msg_url?url=https://www.google.com.mx/"">Telegram</a>
+                                            <a href="tg://msg_url?url={{urlShare}}"">Telegram</a>
                                         </li>
                                     </ul>
 
@@ -74,7 +74,7 @@
                             <div class="col-xs-12">
                                 <div class="card-address">
                                     <strong>{{company.CompanyName}}</strong><br>
-                                    <small>{{company.Address}}</small>
+                                    <small>{{company.address}}</small>
                                 </div>
                             </div>
                         </div>

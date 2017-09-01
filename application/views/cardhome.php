@@ -1,34 +1,18 @@
-<header ng-controller="MainController"  id="header" class="clearfix" data-ma-theme="bluepurple"> <!-- Make sure to change both class and data-current-skin when switching sking manually -->
+<header id="header" ng-controller="MainController" class="clearfix" data-ma-theme="bluepurple">
     <ul class="h-inner clearfix">
-        <li class="hi-trigger ma-trigger" data-ma-action="sidebar-open" data-ma-target="#sidebar">
-            <div class="line-wrap">
-                <div class="line top"></div>
-                <div class="line center"></div>
-                <div class="line bottom"></div>
-            </div>
-        </li>
 
-        <li class="hi-logo hidden-xs">
+        <li class="hi-logo">
             <a href="index.html">Openmind Bussiness</a>
         </li>
 
         <li class="pull-right">
             <ul class="hi-menu">
                 <li>
-                    <p class="m-r-20">Brevy M Prabowo</p>
+                    <p class="m-r-20">{{UserNick}}</p>
                 </li>
                 <li>
-                    <button ng-click="logout()" class="btn btn-primary bgm-red m-t-5">Logout</button>
+                    <button  ng-click="logout()" class="btn btn-primary bgm-red m-t-5">Logout</button>
                 </li>
-                <!--  <li>
-                     <div class="s-profile">
-                         <a>
-                             <div class="sp-pic">
-                                 <img src="img/profile-pics/1.jpg" alt="">
-                             </div>
-                         </a>
-                     </div>
-                 </li> -->
             </ul>
         </li>
     </ul>
@@ -195,15 +179,12 @@
                             </div>
                             <div class="col-xs- col-sm-8 col-md-7">
                                 <div class="card">
-                                    <div class="card-body select-padding">
-
+                                    <div class="ui-select-toggle">
 
                                                         <ui-select ng-model="ctrl.CompanyList.selected"  ng-disabled="ctrl.disabled" title="Choose a Company" on-select="ctrl.GetCard()">
                                                             <ui-select-match placeholder="Select Company">{{$select.selected.CompanyName}}</ui-select-match>
                                                             <ui-select-choices repeat="CompanyList in ctrl.CompanyList | propsFilter: {CompanyName: $select.search}">
                                                                 <div ng-bind-html="CompanyList.CompanyName | highlight: $select.search"></div>
-
-
                                                             </ui-select-choices>
                                                         </ui-select>
 

@@ -45,7 +45,7 @@
 
 
 
-<header id="header" class="clearfix" data-ma-theme="bluepurple" ng-controller="EditProfileController">
+<header id="header" ng-controller="MainController" class="clearfix" data-ma-theme="bluepurple">
     <ul class="h-inner clearfix">
 
         <li class="hi-logo">
@@ -55,10 +55,10 @@
         <li class="pull-right">
             <ul class="hi-menu">
                 <li>
-                    <p class="m-r-20">Brevy M Prabowo</p>
+                    <p class="m-r-20">{{UserNick}}</p>
                 </li>
                 <li>
-                    <button class="btn btn-primary bgm-red m-t-5">Logout</button>
+                    <button  ng-click="logout()" class="btn btn-primary bgm-red m-t-5">Logout</button>
                 </li>
             </ul>
         </li>

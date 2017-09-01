@@ -60,7 +60,7 @@ app.config(function ($routeProvider) {
 
     }).when("/load",{
         publicAccess :true,
-        templateUrl :"openmind_login.html"
+        templateUrl :"openmind_add_company.html"
     })
         .otherwise({
         publicAccess : true,

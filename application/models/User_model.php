@@ -38,6 +38,6 @@ class User_model extends CI_Model{
         $this->db->join('app_role','app_role_user.KodeAppRole = app_role.KodeAppRole','left');
         $this->db->where('app_user.IdAppUser',$IdAppUser);
         $this->db->where('app_user.isActive',1);
-        return $this->db->get()->result();
+        return $this->db->get()->row();
     }
 }

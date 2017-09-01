@@ -1,36 +1,50 @@
 /**
  * Created by My Computer on 8/16/2017.
  */
-app.controller('MainController',function ($scope,$location,$http,$cookies,auth,Services) {
+app.controller('MainController',function ($scope,$rootScope,$location,$http,$cookies,auth,Services,usSpinnerService) {
     var self = $scope;
     var webservice_url =Services.getWebServiceUrl();
     self.version="0.1";
     self.status_message ="";
+    self.UserNick="Undefined";
+    if(auth.isLoggedIn()){
+        var u =auth.getUser();
+        self.UserNick = u.UserNick;
+        console.log(u);
+    }
 
 
     self.login = function(u,p){
+        self.startSpin();
         if(u==null || p ==null){
             self.status_message ="username and password required";
             console.log(self.status_message);
+            self.stopSpin();
             return;
         }
         Services.Login(u,p).then(function (response) {
             console.log(response.data);
            var result = angular.fromJson(response.data);
            if(result.status==true){
+
                 $cookies.put("Authkey",result.AuthKey);
                 $cookies.put("IdAppUser",result.IdAppUser);
                 $cookies.put("UserName",result.UserName);
-                var user = {AuthKey : result.AuthKey,IdAppUser : result.IdAppUser,UserName : result.UserName};
+                $cookies.put("UserNick",result.UserNick);
+                var user = {AuthKey : result.AuthKey,IdAppUser : result.IdAppUser,UserName : result.UserName,UserNick : result.UserNick};
+                self.UserNick = result.UserNick;
+
                 auth.setUser(user);
                 $location.path('/cardhome');
            }else{
                toastr.error("Incorret Login");
                self.status_message="Login Inccoret";
+
            }
         },function(response) {
                 console.log("error " +response);
         })
+        self.stopSpin();
     }
     self.change_password = function (old_password,new_password,retype_new_password) {
         if(new_password != retype_new_password){
@@ -65,13 +79,35 @@ app.controller('MainController',function ($scope,$location,$http,$cookies,auth,S
 
 
     }
+    $scope.startSpin = function() {
+        if (!$scope.spinneractive) {
+            usSpinnerService.spin('spinner-1');
+
+        }
+    };
+    $scope.stopSpin = function() {
+        if ($scope.spinneractive) {
+            usSpinnerService.stop('spinner-1');
+        }
+    };
+    $scope.spinneractive = false;
+    $rootScope.$on('us-spinner:spin', function(event, key) {
+        $scope.spinneractive = true;
+    });
+
+    $rootScope.$on('us-spinner:stop', function(event, key) {
+        $scope.spinneractive = false;
+    });
+
+
 })
 
-app.controller('CompanyController', function($scope,$location ,$http, Services) {
+
+app.controller('CompanyController', function($scope,$rootScope,$location ,$http, Services,usSpinnerService) {
     var self = $scope;
     var namesArr =[];
     self.add = function() {
-
+        self.startSpin();
         var r = Services.submitCompany(self.CompanyName, namesArr[0],self.Address);
         r.then(
             function(r) {
@@ -87,10 +123,11 @@ app.controller('CompanyController', function($scope,$location ,$http, Services) 
                 // failure
                 console.log("fail "+r.response);
             });
+        self.stopSpin();
     }
 
     self.get_company = function () {
-        return "anjas";
+        return "test_company";
     }
 
     self.fileNameChanged = function (ele) {
@@ -98,6 +135,26 @@ app.controller('CompanyController', function($scope,$location ,$http, Services) 
         var l = files.length;
         namesArr[0] = files[0];
     }
+    $scope.startSpin = function() {
+        if (!$scope.spinneractive) {
+            usSpinnerService.spin('spinner-1');
+
+        }
+    };
+    $scope.stopSpin = function() {
+        if ($scope.spinneractive) {
+            usSpinnerService.stop('spinner-1');
+        }
+    };
+    $scope.spinneractive = false;
+    $rootScope.$on('us-spinner:spin', function(event, key) {
+        $scope.spinneractive = true;
+    });
+
+    $rootScope.$on('us-spinner:stop', function(event, key) {
+        $scope.spinneractive = false;
+    });
+
 
 });
 
@@ -157,6 +214,7 @@ app.controller("ListCompany",function($scope,$location ,$http, Services) {
 
 app.controller("ViewCompanyController",function($scope,$location ,$http,  $routeParams,Services) {
     var self = $scope;
+
     var IdCompany = $routeParams.IdCompany;
      Services.GetCompany($routeParams.IdCompany).then(function success(response) {
          var result = response.data;
