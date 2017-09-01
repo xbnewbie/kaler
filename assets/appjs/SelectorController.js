@@ -34,6 +34,10 @@ app.filter('propsFilter', function() {
 
 app.controller('SelectorControllerCompany', function ($scope,$rootScope,$http, $timeout,$location,$interval,Services,$uibModal,$window, $log, $document,Services,usSpinnerService) {
     var self = this;
+    self.canCreateCard=true;
+
+    self.urlShare =app.urlWebService;
+
     function init() {
         console.log('controller started!');
     }
@@ -91,7 +95,7 @@ app.controller('SelectorControllerCompany', function ($scope,$rootScope,$http, $
             var result = angular.fromJson(response.data);
             if(result.status==true){
                 self.cards = result.data;
-                console.log(self.cards);
+
             }else{
                 console.log("Incorret login");
             }
@@ -249,7 +253,11 @@ app.controller('SelectorControllerCompany', function ($scope,$rootScope,$http, $
 
 app.controller('ModalInstanceCtrl', function ($uibModalInstance, items,$location,Services) {
     var $ctrl = this;
-
+    if(Services.getSelectedCompany() ==null){
+        $ctrl.disableCreateCard =true;
+    }else{
+        $ctrl.disableCreateCard =false;
+    }
     $ctrl.create_company = function () {
         $location.path('/add_company');
         $uibModalInstance.dismiss('cancel');
@@ -259,4 +267,5 @@ app.controller('ModalInstanceCtrl', function ($uibModalInstance, items,$location
         $location.path("/choose_template/"+Services.getSelectedCompany());
         $uibModalInstance.dismiss('cancel');
     };
+
 });

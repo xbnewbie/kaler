@@ -10,7 +10,7 @@ app.controller('MainController',function ($scope,$rootScope,$location,$http,$coo
     if(auth.isLoggedIn()){
         var u =auth.getUser();
         self.UserNick = u.UserNick;
-        console.log(u);
+
     }
 
 
@@ -18,12 +18,12 @@ app.controller('MainController',function ($scope,$rootScope,$location,$http,$coo
         self.startSpin();
         if(u==null || p ==null){
             self.status_message ="username and password required";
-            console.log(self.status_message);
+
             self.stopSpin();
             return;
         }
         Services.Login(u,p).then(function (response) {
-            console.log(response.data);
+
            var result = angular.fromJson(response.data);
            if(result.status==true){
 
@@ -115,7 +115,8 @@ app.controller('CompanyController', function($scope,$rootScope,$location ,$http,
                 console.log(r.response);
                var result = angular.fromJson(r.response);
                 if(result.status==true){
-                    $location.path("/list_company");
+                    //$location.path("/list_company");
+                    $location.path("/cardhome");
                 }else{
                     toastr.error("Failed fetch list company");
                 }

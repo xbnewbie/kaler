@@ -1,5 +1,5 @@
 app.config(function ($routeProvider) {
-    var template_url="http://172.20.10.3/idcard/template";
+    var template_url=app.urlTemplate;
     $routeProvider .when("/",{
         publicAccess : false,
         templateUrl : template_url +"/cardhome",
@@ -42,7 +42,10 @@ app.config(function ($routeProvider) {
         templateUrl : template_url+"/edit_card",
         controller : 'EditProfileController'
     }).when("/display_card/:NickName",{
-        templateUrl :template_url+"/view_card",
+        templateUrl : function (params){
+            console.log("load template for "+ params.NickName);
+           return template_url+"/view_card/" + params.NickName;
+        },
         publicAccess : true,
        // controller : 'ViewCardController'
 
@@ -60,7 +63,7 @@ app.config(function ($routeProvider) {
 
     }).when("/load",{
         publicAccess :true,
-        templateUrl :"openmind_add_company.html"
+        templateUrl :"openmind_pub_long.html"
     })
         .otherwise({
         publicAccess : true,

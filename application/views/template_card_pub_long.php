@@ -1,3 +1,4 @@
+<body>
 <div class="card-bg" ng-controller="ViewCardController">
     <section id="main-card">
         <div class="container">
@@ -20,13 +21,30 @@
                     <div class="col-md-6 col-sm-6 col-xs-5">
                         <ul class="h-inner-publik">
                             <li class="pull-right ico-md">
-                                <ul class="hi-menu">
+                                <ul class="hi-menu"  uib-dropdown on-toggle="toggled(open)">
+
                                     <li>
-                                        <a href="{{vcfurl}}" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Save Contact"><i class="zmdi zmdi-download"></i></a>
+                                        <a href="{{vcfurl}}" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Save Contact" style=" text-decoration: none;"><i class="zmdi zmdi-download"></i></a>
+
                                     </li>
                                     <li>
-                                        <a href="#" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Share"><i class="zmdi zmdi-share"></i></a>
+                                        <a href="" class="clearlink" data-toggle="tooltip" data-placement="bottom" title="Share" uib-dropdown-toggle>
+                                            <i class="zmdi zmdi-share"></i>
+                                        </a>
                                     </li>
+
+                                    <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                        <li>
+                                            <a href="whatsapp://send?text={{urlShare}}" data-action="share/whatsapp/share">WhatsApp</a>
+                                        </li>
+                                        <li>
+                                            <a href="tg://msg_url?url={{urlShare}}"">Telegram</a>
+                                        </li>
+                                    </ul>
+
+
+
+
                                 </ul>
                             </li>
                         </ul>
@@ -38,14 +56,14 @@
                 <div class="card-long">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="s-square">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <div class="s-profile">
                                     <div class="sp-pic-square">
                                         <img src="uploads/users/{{card.PhotoProfile}}" alt="">
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-9 col-sm-9 col-xs-12">
                                 <div class="text-long-card">
 
                                     <div class="row">
@@ -65,7 +83,7 @@
                                                     <div class="col-xs-12">
                                                         <div class="card-address-long">
                                                             <strong>{{company.CompanyName}}</strong><br>
-                                                            <small>{{company.Address}}</small>
+                                                            <small>{{company.address}}</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -120,9 +138,10 @@
                     </div>
                 </div>
             </div>
+        </div>
     </section>
 
-</div>
+
 
     <!-- Older IE warning message -->
     <!--[if lt IE 9]>
@@ -167,3 +186,4 @@
     </div>
     <![endif]-->
 
+</body>

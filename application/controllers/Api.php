@@ -42,7 +42,7 @@ class Api extends CI_Controller
             $item_profile = json_decode($i);
             $IdProfile = $this->Profile_model->get_max_id()->IdProfile + 1;
             $data_profile = array("IdProfile" => $IdProfile, "FirstName" => $profile->FirstName, "MiddleName" => $profile->MiddleName,
-                "LastName" => $profile->LastName, "NickName" => $profile->NickName, "PhotoProfile" => "", "IdCompany" => $profile->IdCompany);
+                "LastName" => $profile->LastName, "NickName" => $profile->NickName, "PhotoProfile" => "", "IdCompany" => $profile->IdCompany,"IdTheme" =>$profile->IdTheme,"visit"=>0);
             if (!empty($_FILES['PhotoPicture'])) {
                 $config['upload_path'] = './uploads/users/';
                 $config['allowed_types'] = 'gif|jpg|png';
@@ -240,11 +240,6 @@ class Api extends CI_Controller
     }
 
 
-    ##
-    function insert_item_profile($arr)
-    {
-
-    }
 
     ##message
     function error_msg($msg = '')

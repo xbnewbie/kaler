@@ -83,7 +83,7 @@ item
                                 <div class="form-group">
                                     <div class="fg-line disabled">
                                         <strong class="f-12">Company Address</strong>
-                                        <textarea class="form-control f-14 m-t-5" disabled>G{{company.Address}}</textarea>
+                                        <textarea class="form-control f-14 m-t-5" disabled>G{{company.address}}</textarea>
                                         <input type="hidden" name="IdCompany" value="{{company.IdCompany}}">
                                     </div>
                                 </div>

@@ -5,6 +5,8 @@
 
 'use strict';
 var app = angular.module('myApp',["ngRoute","ngCookies",'ui.bootstrap','ngSanitize', 'ui.select','ngAnimate','angularSpinner']);
+app.urlWebService ="http://172.20.10.3/idcard";
+app.urlTemplate   ="http://172.20.10.3/idcard/template";
 
 app.factory('auth',function () {
     var user;
@@ -20,9 +22,6 @@ app.factory('auth',function () {
 
 });
 
-app.config(['$compileProvider', function ($compileProvider) {
-    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|whatsapp|tg|callto|file|sms|tel):/);
-}]);
 
 app.run(['$rootScope', '$location','$cookies','auth','$route', function ($rootScope, $location,$cookies,auth,$route) {
 
@@ -55,6 +54,9 @@ app.run(['$rootScope', '$location','$cookies','auth','$route', function ($rootSc
 
 
     });
+}]);
+app.config(['$compileProvider', function ($compileProvider) {
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|whatsapp|tg|callto|file|sms|tel):/);
 }]);
 
 //

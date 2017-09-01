@@ -258,10 +258,10 @@
                                                             SHARE <span class="caret"></span>
                                                         </button>
                                                         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                                                            <li><a href="#">WhatsApp</a></li>
-                                                            <li><a href="#">Email</a></li>
-                                                            <li class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
+                                                            <li><a href="whatsapp://send?text={{ctrl.urlShare}}/{{cards.NickName}}">WhatsApp</a></li>
+                                                            <li><a href="mailto:?body=Hi, this is card name {{cards.NickName}} %0D%0A {{ctrl.urlShare}}/{{cards.NickName}}&subject=Id Card for {{cards.NickName}}">Email</a></li>
+                                                            <!--<li class="divider"></li>
+                                                            <li><a href="#">Separated link</a></li>-->
                                                         </ul>
                                                     </div>
 

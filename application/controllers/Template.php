@@ -10,6 +10,7 @@ function __construct()
 {
     parent::__construct();
     $this->load->helper('url');
+
 }
 
     function index(){
@@ -48,10 +49,22 @@ function __construct()
     }
 
     function view_card(){
-        //  $this->load->view('view_card');
+        $this->load->model('Company_model');
+        $this->load->model('Profile_model');
+        $NickName = $this->uri->segment(3);
+        $profile = $this->Profile_model->get_profile_by_nickname($NickName);
+         if($profile->IdTheme==3){
+             $this->load->view('template_card_pub');
+         }else if($profile->IdTheme ==2){
+             $this->load->view('template_card_pub_long');
+         }else{
+             $this->load->view('template_card_pub');
+         }
 
-       $this->load->view('template_card_pub');
-        // $this->load->view('template_card_pub_long');
+        //$this->load->view('view_card');
+
+        //
+
     }
     function edit_card(){
         $this->load->model('Profile_model');
